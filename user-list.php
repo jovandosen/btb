@@ -33,59 +33,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>User list</title>
+        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/user-list.css">
+        <link rel="icon" href="favicon.png">
     </head>
     <body>
         <?php require('navigation.php'); ?>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-            #user-table-container {
-                width: 500px;
-                height: auto;
-                margin: 100px auto;
-            }
-            .link-style {
-                text-decoration: none;
-            }
-            .link-style:hover {
-                text-decoration: underline;
-            }
-            table, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-            }
-            th, td {
-                padding: 10px;
-            }
-            #user-table {
-                margin: 10px auto;
-            }
-            #delete-user-btn {
-                padding: 5px;
-                border: none;
-                background-color: red;
-                color: white;
-            }
-            #edit-user-btn {
-                padding: 5px;
-                border: none;
-                background-color: lightblue;
-            }
-            #delete-user-btn:hover, #edit-user-btn:hover {
-                cursor: pointer;
-            }
-            .flash-msg-box {
-                padding: 20px;
-                font-size: 18px;
-                color: white;
-            }
-            .flash-error {
-                background-color: red;
-            }
-        </style>
         <div id="user-table-container">
             <?php if($result->num_rows > 0): ?>
                 <h3>User list</h3>
@@ -95,7 +48,8 @@
                             <th>ID</th>
                             <th>NAME</th>
                             <th>EMAIL</th>
-                            <th>PASSWORD</th>
+                            <th>CREATED</th>
+                            <th>UPDATED</th>
                             <th>OPTIONS</th>
                         </tr>
                     </thead>
@@ -112,7 +66,10 @@
                                     <?php echo $row->email; ?>
                                 </td>
                                 <td>
-                                    <?php echo $row->password; ?>
+                                    <?php echo $row->created; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row->updated; ?>
                                 </td>
                                 <td>
                                     <form action="delete-user.php" method="POST">
@@ -130,15 +87,6 @@
             <?php endif; ?>
             <a href="register.php" class="link-style">Register page</a>
         </div>
-        <script>
-            let flashMsgNum = document.getElementsByClassName("flash-msg-box").length;
-
-            if(flashMsgNum > 0){
-                setTimeout(function(){
-                    let flashMsgEl = document.getElementById("flash-msg-el");
-                    flashMsgEl.remove();
-                }, 3000);
-            }
-        </script>
+        <script src="assets/js/flash-msg.js"></script>
     </body>
 </html>

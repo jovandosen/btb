@@ -1,0 +1,43 @@
+#user-table-container {
+    width: 50vw;
+    height: auto;
+    margin: 100px auto;
+}
+.link-style {
+    text-decoration: none;
+}
+.link-style:hover {
+    text-decoration: underline;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+}
+#user-table {
+    margin: 10px auto;
+}
+#delete-user-btn {
+    padding: 5px;
+    border: none;
+    background-color: red;
+    color: white;
+}
+#edit-user-btn {
+    padding: 5px;
+    border: none;
+    background-color: lightblue;
+}
+#delete-user-btn:hover, #edit-user-btn:hover {
+    cursor: pointer;
+}
+.flash-msg-box {
+    padding: 20px;
+    font-size: 18px;
+    color: white;
+}
+.flash-error {
+    background-color: red;
+}

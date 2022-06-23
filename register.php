@@ -56,6 +56,23 @@
         if(empty($password)){
             $error = true;
             $_SESSION['password_error'] = 'Password can not be empty.';
+        } else {
+
+            if(strlen($password) < 8){
+                $error = true;
+                $_SESSION['password_error'] = 'Password must have at least 8 characters.';
+            } else {
+
+                $containsLetter  = preg_match('/[a-zA-Z]/', $password);
+                $containsDigit   = preg_match('/\d/', $password);
+                $containsSpecialChar = preg_match('/[^a-zA-Z\d]/', $password);
+
+                if(!$containsLetter || !$containsDigit || !$containsSpecialChar){
+                    $error = true;
+                    $_SESSION['password_error'] = 'Password must contain letters, numbers and special characters.';
+                }
+
+            }
         }
 
         // if there are no validation errors
@@ -71,10 +88,16 @@
             }
 
             // prepare sql query
-            $sqlPrepare = $conn->prepare("INSERT INTO users(name, email, password) VALUES(?, ?, ?)");
+            $sqlPrepare = $conn->prepare("INSERT INTO users(name, email, password, created, updated) VALUES(?, ?, ?, ?, ?)");
+
+            // hash the user password
+            $password = password_hash($password, PASSWORD_DEFAULT);
+
+            // current date and time
+            $dateTime = date('Y-m-d H:i:s');
 
             // bind user input fields
-            $sqlPrepare->bind_param("sss", $name, $email, $password);
+            $sqlPrepare->bind_param("sssss", $name, $email, $password, $dateTime, $dateTime);
 
             // run query
             $sqlPrepare->execute();
@@ -105,120 +128,72 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Register</title>
+        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/register.css">
+        <link rel="icon" href="favicon.png">
     </head>
     <body>
         <?php require('navigation.php'); ?>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-            #form-container {
-                width: 500px;
-                height: auto;
-                margin: 100px auto;
-            }
-            .field-style {
-                padding: 10px;
-                width: 300px;
-            }
-            #reg-btn {
-                padding: 10px;
-                color: white;
-                background-color: lightseagreen;
-                border: none;
-            }
-            #reg-btn:hover {
-                cursor: pointer;
-            }
-            .box-style {
-                margin-bottom: 10px;
-            }
-            .error-msg-box {
-                margin-top: 5px;
-                color: red;
-                font-size: 15px;
-            }
-            .link-style {
-                text-decoration: none;
-            }
-            .link-style:hover {
-                text-decoration: underline;
-            }
-            .flash-msg-box {
-                padding: 20px;
-                font-size: 18px;
-            }
-            .flash-success {
-                background-color: lightgreen;
-            }
-        </style>
         <div id="form-container">
-            <form action="register.php" method="POST">
-                <h3 class="box-style">Register form</h3>
-                <div class="box-style">
-                    <div>
-                        <input type="text" name="name" placeholder="Name..." class="field-style" autocomplete="off" maxlength="255" 
-                            value="<?php echo (isset($_SESSION['temp_name'])) ? $_SESSION['temp_name'] : ''; ?>">
+            <div>
+                <form action="register.php" method="POST">
+                    <h3 class="box-style">Register form</h3>
+                    <div class="box-style">
+                        <div>
+                            <input type="text" name="name" placeholder="Name..." class="field-style" autocomplete="off" maxlength="255" 
+                                value="<?php echo (isset($_SESSION['temp_name'])) ? $_SESSION['temp_name'] : ''; ?>">
+                        </div>
+                        <div class="error-msg-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['name_error'])){
+                                        echo $_SESSION['name_error'];
+                                        unset($_SESSION['name_error']);
+                                    }
+                                ?>
+                            </p>
+                        </div>
                     </div>
-                    <div class="error-msg-box">
-                        <p>
-                            <?php
-                                if(isset($_SESSION['name_error'])){
-                                    echo $_SESSION['name_error'];
-                                    unset($_SESSION['name_error']);
-                                }
-                            ?>
-                        </p>
+                    <div class="box-style">
+                        <div>
+                            <input type="text" name="email" placeholder="Email..." class="field-style" autocomplete="off" maxlength="255" 
+                                value="<?php echo (isset($_SESSION['temp_email'])) ? $_SESSION['temp_email'] : ''; ?>">
+                        </div>
+                        <div class="error-msg-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['email_error'])){
+                                        echo $_SESSION['email_error'];
+                                        unset($_SESSION['email_error']);
+                                    }
+                                ?>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="box-style">
-                    <div>
-                        <input type="text" name="email" placeholder="Email..." class="field-style" autocomplete="off" maxlength="255" 
-                            value="<?php echo (isset($_SESSION['temp_email'])) ? $_SESSION['temp_email'] : ''; ?>">
+                    <div class="box-style">
+                        <div>
+                            <input type="password" name="password" placeholder="Password..." class="field-style">
+                        </div>
+                        <div class="error-msg-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['password_error'])){
+                                        echo $_SESSION['password_error'];
+                                        unset($_SESSION['password_error']);
+                                    }
+                                ?>
+                            </p>
+                        </div>
                     </div>
-                    <div class="error-msg-box">
-                        <p>
-                            <?php
-                                if(isset($_SESSION['email_error'])){
-                                    echo $_SESSION['email_error'];
-                                    unset($_SESSION['email_error']);
-                                }
-                            ?>
-                        </p>
+                    <div class="box-style">
+                        <input type="submit" value="Register" name="register" id="reg-btn" title="Register">
                     </div>
-                </div>
-                <div class="box-style">
-                    <div>
-                        <input type="password" name="password" placeholder="Password..." class="field-style">
-                    </div>
-                    <div class="error-msg-box">
-                        <p>
-                            <?php
-                                if(isset($_SESSION['password_error'])){
-                                    echo $_SESSION['password_error'];
-                                    unset($_SESSION['password_error']);
-                                }
-                            ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="box-style">
-                    <input type="submit" value="Register" name="register" id="reg-btn" title="Register">
-                </div>
-            </form>
-            <a href="user-list.php" class="link-style">User list</a>
+                </form>
+            </div>
+            <div>
+                <a href="user-list.php" class="link-style">User list</a>
+            </div>
         </div>
-        <script>
-            let flashMsgNum = document.getElementsByClassName("flash-msg-box").length;
-
-            if(flashMsgNum > 0){
-                setTimeout(function(){
-                    let flashMsgEl = document.getElementById("flash-msg-el");
-                    flashMsgEl.remove();
-                }, 3000);
-            }
-        </script>
+        <script src="assets/js/flash-msg.js"></script>
     </body>
 </html>
