@@ -28,7 +28,7 @@
     // write session token message
     $message = "Initial token value: " . $token;
     writeSessionLogMsg($message);
-    die();
+    // die();
 
     // check if successfull registration message exists
     if(isset($_SESSION['register_message'])){
