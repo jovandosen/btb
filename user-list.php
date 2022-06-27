@@ -8,7 +8,7 @@
         <title>User list</title>
         <link rel="stylesheet" href="assets/css/main.css">
         <link rel="stylesheet" href="assets/css/user-list.css">
-        <link rel="icon" href="favicon.png">
+        <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
         <?php require('navigation.php'); ?>

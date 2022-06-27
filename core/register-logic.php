@@ -3,6 +3,33 @@
     // start the session
     session_start();
 
+    if(empty($_SESSION['token'])){
+        $_SESSION['token'] = bin2hex(random_bytes(32));
+    }
+
+    $token = $_SESSION['token'];
+
+    // function that writes to session log file
+    function writeSessionLogMsg($msg)
+    {
+        $myfile = fopen("session.log", "a") or die("Unable to open file!");
+        $txt = "$msg\n";
+        fwrite($myfile, $txt);
+        fclose($myfile);
+    }
+
+    // clearstatcache();
+    // echo substr(sprintf('%o', fileperms('session.log')), -4);
+    // die();
+
+    // var_dump(posix_getpwuid(fileowner('session.log')));
+    // die();
+
+    // write session token message
+    $message = "Initial token value: " . $token;
+    writeSessionLogMsg($message);
+    die();
+
     // check if successfull registration message exists
     if(isset($_SESSION['register_message'])){
 
@@ -11,6 +38,12 @@
         // remove all session variables and destroy session
         session_unset();
         session_destroy();
+
+        $_SESSION['token'] = bin2hex(random_bytes(32));
+
+        $token = $_SESSION['token'];
+
+        // echo $token;
     }
 
     // check if register button is clicked
@@ -72,6 +105,13 @@
                     $_SESSION['password_error'] = 'Password must contain letters, numbers and special characters.';
                 }
 
+            }
+        }
+
+        if(!empty($_POST['token'])){
+            if(!hash_equals($_SESSION['token'], $_POST['token'])){
+                $error = true;
+                $_SESSION['token_error'] = 'Form request invalid.';
             }
         }
 

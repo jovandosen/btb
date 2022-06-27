@@ -8,13 +8,14 @@
         <title>Register</title>
         <link rel="stylesheet" href="assets/css/main.css">
         <link rel="stylesheet" href="assets/css/register.css">
-        <link rel="icon" href="favicon.png">
+        <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
         <?php require('navigation.php'); ?>
         <div id="form-container">
             <div>
                 <form action="register.php" method="POST">
+                    <input type="hidden" name="token" value="<?php echo $token; ?>">
                     <h3 class="box-style">Register form</h3>
                     <div class="box-style">
                         <div>
@@ -64,7 +65,19 @@
                         </div>
                     </div>
                     <div class="box-style">
-                        <input type="submit" value="Register" name="register" id="reg-btn" title="Register">
+                        <div>
+                            <input type="submit" value="Register" name="register" id="reg-btn" title="Register">
+                        </div>
+                        <div class="error-msg-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['token_error'])){
+                                        echo $_SESSION['token_error'];
+                                        unset($_SESSION['token_error']);
+                                    }
+                                ?>
+                            </p>
+                        </div>
                     </div>
                 </form>
             </div>
