@@ -83,6 +83,14 @@
                 exit();
             }
 
+            $sqlPrepareSelect = $conn->prepare("SELECT * FROM users WHERE email = ?");
+
+            $sqlPrepareSelect->bind_param("s", $email);
+
+            $selectResult = $sqlPrepareSelect->execute();
+
+            var_dump($selectResult);
+
             // set successfull login message
             $_SESSION['login_message'] = 'Welcome back.';
 
