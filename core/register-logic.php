@@ -9,41 +9,10 @@
 
     $token = $_SESSION['token'];
 
-    // function that writes to session log file
-    function writeSessionLogMsg($msg)
-    {
-        $myfile = fopen("session.log", "a") or die("Unable to open file!");
-        $txt = "$msg\n";
-        fwrite($myfile, $txt);
-        fclose($myfile);
-    }
-
-    // clearstatcache();
-    // echo substr(sprintf('%o', fileperms('session.log')), -4);
-    // die();
-
-    // var_dump(posix_getpwuid(fileowner('session.log')));
-    // die();
-
-    // write session token message
-    $message = "Initial token value: " . $token;
-    writeSessionLogMsg($message);
-    // die();
-
     // check if successfull registration message exists
     if(isset($_SESSION['register_message'])){
-
         echo "<div id='flash-msg-el' class='flash-msg-box flash-success'>" . $_SESSION['register_message'] . "</div>";
-
-        // remove all session variables and destroy session
-        session_unset();
-        session_destroy();
-
-        $_SESSION['token'] = bin2hex(random_bytes(32));
-
-        $token = $_SESSION['token'];
-
-        // echo $token;
+        unset($_SESSION['register_message']);
     }
 
     // check if register button is clicked
@@ -150,6 +119,13 @@
 
             // set successfull registration message
             $_SESSION['register_message'] = 'New record successfully added to database.';
+
+            // remove all session variables and destroy session
+            foreach($_SESSION as $k => $v){
+                if($k != 'register_message'){
+                    unset($_SESSION[$k]);
+                }
+            }
 
             // redirect back to same page, to reset HTTP state
             header('Location: register.php');
