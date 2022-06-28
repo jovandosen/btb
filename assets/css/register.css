@@ -8,13 +8,13 @@
     padding: 10px;
     width: 300px;
 }
-#reg-btn {
+#reg-btn, #log-btn {
     padding: 10px;
     color: white;
     background-color: lightseagreen;
     border: none;
 }
-#reg-btn:hover {
+#reg-btn:hover, #log-btn:hover {
     cursor: pointer;
 }
 .box-style {
