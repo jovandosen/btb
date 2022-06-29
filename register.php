@@ -81,9 +81,6 @@
                     </div>
                 </form>
             </div>
-            <div>
-                <a href="user-list.php" class="link-style">User list</a>
-            </div>
         </div>
         <script src="assets/js/flash-msg.js"></script>
     </body>

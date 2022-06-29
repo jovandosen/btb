@@ -9,12 +9,6 @@
 
     $token = $_SESSION['token'];
 
-    // check if successfull registration message exists
-    if(isset($_SESSION['login_message'])){
-        echo "<div id='flash-msg-el' class='flash-msg-box flash-success'>" . $_SESSION['login_message'] . "</div>";
-        unset($_SESSION['login_message']);
-    }
-
     // check if register button is clicked
     if(isset($_POST['login'])){
 
@@ -89,10 +83,42 @@
 
             $selectResult = $sqlPrepareSelect->execute();
 
-            var_dump($selectResult);
+            $storeResult = $sqlPrepareSelect->get_result();
 
-            // set successfull login message
-            $_SESSION['login_message'] = 'Welcome back.';
+            $user = $storeResult->fetch_object();
+
+            // user found by email address
+            if(!is_null($user)){
+                
+                // check if password is correct
+                $userPasswordCheck = password_verify($password, $user->password);
+
+                if(!$userPasswordCheck){
+
+                    $_SESSION['password_error'] = 'Password is not correct.';
+
+                    header('Location: login.php');
+
+                    exit();
+                }
+
+                // set successfull login message
+                $_SESSION['login_message'] = 'Welcome back.';
+
+                $_SESSION['user_id'] = $user->id;
+
+                header('Location: core/profile.php');
+
+                exit();
+
+            } else {
+
+                $_SESSION['email_error'] = 'Email address not found.';
+
+                header('Location: login.php');
+
+                exit();
+            }
 
         }
     }
