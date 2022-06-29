@@ -1,6 +1,3 @@
-<?php
-    session_start();
-?>
 <style>
     * {
         margin: 0;
@@ -25,8 +22,8 @@
 <nav>
     <ul>
         <?php if(!isset($_SESSION['user_id'])): ?>
-            <li><a href="../register.php">Register</a></li>
-            <li><a href="../login.php">Login</a></li>
+            <li><a href="register.php">Register</a></li>
+            <li><a href="login.php">Login</a></li>
         <?php else: ?>
             <li><a href="profile.php">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>    

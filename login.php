@@ -66,6 +66,5 @@
                 </form>
             </div>
         </div>
-        <!-- <script src="assets/js/flash-msg.js"></script> -->
     </body>
 </html>
