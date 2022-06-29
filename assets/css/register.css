@@ -32,9 +32,26 @@
     text-decoration: underline;
 }
 .flash-msg-box {
-    padding: 20px;
+    padding: 10px;
     font-size: 18px;
+    position: absolute;
+    width: 100%;
+    top: 0;
 }
 .flash-success {
     background-color: lightgreen;
+}
+.password-field-container {
+    position: relative;
+}
+.password-eye-box {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+.password-eye-box img {
+    width: 18px;
+}
+.password-eye-box img:hover {
+    cursor: pointer;
 }

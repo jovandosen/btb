@@ -3,6 +3,11 @@
     // start the session
     session_start();
 
+    if(isset($_SESSION['user_id'])){
+        header('Location: core/profile.php');
+        exit();
+    }
+
     if(empty($_SESSION['token'])){
         $_SESSION['token'] = bin2hex(random_bytes(32));
     }

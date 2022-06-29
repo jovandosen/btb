@@ -34,8 +34,12 @@
                         </div>
                     </div>
                     <div class="box-style">
-                        <div>
-                            <input type="password" name="password" placeholder="Password..." class="field-style">
+                        <div class="password-field-container">
+                            <input type="password" name="password" placeholder="Password..." class="field-style password-input-el">
+                            <div class="password-eye-box">
+                                <img src="assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password" class="eye-slash-el btb-eye">
+                                <img src="assets/images/eye.svg" alt="Eye" title="Click to hide password" style="display: none;" class="eye-el btb-eye">
+                            </div>
                         </div>
                         <div class="error-msg-box">
                             <p>
@@ -66,5 +70,6 @@
                 </form>
             </div>
         </div>
+        <script src="assets/js/password-visibility.js"></script>
     </body>
 </html>

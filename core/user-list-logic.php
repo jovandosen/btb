@@ -3,6 +3,11 @@
     // start the session
     session_start();
 
+    if(!isset($_SESSION['user_id'])){
+        header('Location: ../login.php');
+        exit();
+    }
+
     // create db connection
     $conn = new mysqli("localhost", "jovan", "protector-994", "btb");
 
