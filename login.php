@@ -35,10 +35,14 @@
                     </div>
                     <div class="box-style">
                         <div class="password-field-container">
-                            <input type="password" name="password" placeholder="Password..." class="field-style password-input-el">
+                            <input type="password" name="password" placeholder="Password..." class="field-style password-input-el" id="password">
                             <div class="password-eye-box">
-                                <img src="assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password" class="eye-slash-el btb-eye">
-                                <img src="assets/images/eye.svg" alt="Eye" title="Click to hide password" style="display: none;" class="eye-el btb-eye">
+                                <div class="password-eye-with-slash btb-eye eye-slash-el" id="eye-slash-element">
+                                    <img src="assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password">
+                                </div>
+                                <div class="password-eye-no-slash btb-eye" id="eye-element" style="display: none;">
+                                    <img src="assets/images/eye.svg" alt="Eye" title="Click to hide password">
+                                </div>
                             </div>
                         </div>
                         <div class="error-msg-box">
