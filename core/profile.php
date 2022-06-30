@@ -37,5 +37,6 @@
         ?>
         <h1>Profile page</h1>
         <script src="../assets/js/flash-msg.js"></script>
+        <script src="../assets/js/navigation.js"></script>
     </body>
 </html>

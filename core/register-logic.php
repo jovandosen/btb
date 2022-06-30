@@ -113,8 +113,9 @@
             // close prepared statement
             $sqlPrepare->close();
 
-            // set user id in session
+            // set user id and name in session
             $_SESSION['user_id'] = $conn->insert_id;
+            $_SESSION['user_name'] = $name;
 
             // close connection
             $conn->close();

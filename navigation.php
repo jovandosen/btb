@@ -18,6 +18,15 @@
         text-decoration: none;
         color: white;
     }
+    .logged-user-dropdown-links {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 38px;   
+    }
+    .logged-user-dropdown-links li {
+        display: block;
+    }
 </style>
 <nav>
     <ul>
@@ -25,8 +34,13 @@
             <li><a href="register.php">Register</a></li>
             <li><a href="login.php">Login</a></li>
         <?php else: ?>
-            <li><a href="profile.php">Profile</a></li>
-            <li><a href="logout.php">Logout</a></li>    
+            <li class="user-links-wrapper" id="user-links-wrapper-box">
+                <a href="javascript:void(0)"><?php echo (isset($_SESSION['user_name'])) ? $_SESSION['user_name'] : 'No Name'; ?></a>
+                <ul class="logged-user-dropdown-links" id="logged-user-dropdown-links-el">
+                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </li>
         <?php endif; ?>
     </ul>
 </nav>
