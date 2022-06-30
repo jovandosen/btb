@@ -8,6 +8,7 @@
         <title>Login</title>
         <link rel="stylesheet" href="assets/css/main.css">
         <link rel="stylesheet" href="assets/css/register.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
@@ -18,8 +19,10 @@
                     <input type="hidden" name="token" value="<?php echo $token; ?>">
                     <h3 class="box-style">Login form</h3>
                     <div class="box-style">
-                        <div>
-                            <input type="text" name="email" placeholder="Email..." class="field-style" autocomplete="off" maxlength="255" 
+                        <div class="auth-form-field">
+                            <i class="fa fa-envelope"></i>
+                            <input type="text" name="email" placeholder="Email..." 
+                                class="field-style <?php echo (isset($_SESSION['email_error'])) ? 'form-field-error' : ''; ?>" autocomplete="off" maxlength="255" 
                                 value="<?php echo (isset($_SESSION['temp_email'])) ? $_SESSION['temp_email'] : ''; ?>">
                         </div>
                         <div class="error-msg-box">
@@ -35,7 +38,9 @@
                     </div>
                     <div class="box-style">
                         <div class="password-field-container">
-                            <input type="password" name="password" placeholder="Password..." class="field-style password-input-el" id="password">
+                            <i class="fa fa-key"></i>
+                            <input type="password" name="password" placeholder="Password..." 
+                                class="field-style password-input-el <?php echo (isset($_SESSION['password_error'])) ? 'form-field-error' : ''; ?>" id="password">
                             <div class="password-eye-box">
                                 <div class="password-eye-with-slash btb-eye eye-slash-el" id="eye-slash-element">
                                     <img src="assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password">

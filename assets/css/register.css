@@ -60,3 +60,6 @@
     left: 5px;
     top: 11px;
 }
+.form-field-error {
+    border: 2px solid red;
+}
