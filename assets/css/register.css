@@ -5,7 +5,7 @@
     margin: 100px auto;
 }
 .field-style {
-    padding: 10px;
+    padding: 10px 10px 10px 22px;
     width: 300px;
 }
 #reg-btn, #log-btn {
@@ -41,7 +41,7 @@
 .flash-success {
     background-color: lightgreen;
 }
-.password-field-container {
+.password-field-container, .auth-form-field {
     position: relative;
 }
 .password-eye-box {
@@ -54,4 +54,9 @@
 }
 .password-eye-box img:hover {
     cursor: pointer;
+}
+.box-style i {
+    position: absolute;
+    left: 5px;
+    top: 11px;
 }

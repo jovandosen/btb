@@ -14,12 +14,6 @@
 
     $token = $_SESSION['token'];
 
-    // check if successfull registration message exists
-    if(isset($_SESSION['register_message'])){
-        echo "<div id='flash-msg-el' class='flash-msg-box flash-success'>" . $_SESSION['register_message'] . "</div>";
-        unset($_SESSION['register_message']);
-    }
-
     // check if register button is clicked
     if(isset($_POST['register'])){
 
@@ -119,21 +113,17 @@
             // close prepared statement
             $sqlPrepare->close();
 
+            // set user id in session
+            $_SESSION['user_id'] = $conn->insert_id;
+
             // close connection
             $conn->close();
 
             // set successfull registration message
-            $_SESSION['register_message'] = 'New record successfully added to database.';
+            $_SESSION['register_message'] = 'You have successfully registered.';
 
-            // remove all session variables and destroy session
-            foreach($_SESSION as $k => $v){
-                if($k != 'register_message'){
-                    unset($_SESSION[$k]);
-                }
-            }
-
-            // redirect back to same page, to reset HTTP state
-            header('Location: register.php');
+            // redirect to profile page
+            header('Location: core/profile.php');
 
             // kill the script
             exit();

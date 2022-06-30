@@ -1,6 +1,7 @@
 <?php
     session_start();
 
+    // check if user is logged in
     if(!isset($_SESSION['user_id'])){
         header('Location: ../login.php');
         exit();
@@ -21,10 +22,16 @@
         <?php require('../navigation.php'); ?>
         <?php
         
-            // check if successfull registration message exists
+            // check if successfull login message exists
             if(isset($_SESSION['login_message'])){
                 echo "<div id='flash-msg-el' class='flash-msg-box flash-success'>" . $_SESSION['login_message'] . "</div>";
                 unset($_SESSION['login_message']);
+            }
+
+            // check if successfull registration message exists
+            if(isset($_SESSION['register_message'])){
+                echo "<div id='flash-msg-el' class='flash-msg-box flash-success'>" . $_SESSION['register_message'] . "</div>";
+                unset($_SESSION['register_message']);
             }
 
         ?>
