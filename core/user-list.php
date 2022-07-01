@@ -8,6 +8,7 @@
         <title>User list</title>
         <link rel="stylesheet" href="../assets/css/main.css">
         <link rel="stylesheet" href="../assets/css/user-list.css">
+        <link rel="stylesheet" href="../assets/css/register.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
@@ -58,7 +59,6 @@
             <?php else: ?>
                 <h3>No records found.</h3>    
             <?php endif; ?>
-            <a href="register.php" class="link-style">Register page</a>
         </div>
         <script src="../assets/js/flash-msg.js"></script>
         <script src="../assets/js/navigation.js"></script>
