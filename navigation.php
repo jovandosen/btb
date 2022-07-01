@@ -18,11 +18,14 @@
         text-decoration: none;
         color: white;
     }
+    nav ul li a:hover {
+        color: #cccccc;
+    }
     .logged-user-dropdown-links {
         display: none;
         position: absolute;
         right: 0;
-        top: 38px;   
+        top: 28px;   
     }
     .logged-user-dropdown-links li {
         display: block;
@@ -38,6 +41,7 @@
                 <a href="javascript:void(0)"><?php echo (isset($_SESSION['user_name'])) ? $_SESSION['user_name'] : 'No Name'; ?></a>
                 <ul class="logged-user-dropdown-links" id="logged-user-dropdown-links-el">
                     <li><a href="profile.php">Profile</a></li>
+                    <li><a href="user-list.php">User List</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 </ul>
             </li>

@@ -1,4 +1,4 @@
-<?php require('core/user-list-logic.php'); ?>
+<?php require('user-list-logic.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,12 +6,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>User list</title>
-        <link rel="stylesheet" href="assets/css/main.css">
-        <link rel="stylesheet" href="assets/css/user-list.css">
+        <link rel="stylesheet" href="../assets/css/main.css">
+        <link rel="stylesheet" href="../assets/css/user-list.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
-        <?php require('navigation.php'); ?>
+        <?php require('../navigation.php'); ?>
         <div id="user-table-container">
             <?php if($result->num_rows > 0): ?>
                 <h3>User list</h3>
@@ -60,6 +60,7 @@
             <?php endif; ?>
             <a href="register.php" class="link-style">Register page</a>
         </div>
-        <script src="assets/js/flash-msg.js"></script>
+        <script src="../assets/js/flash-msg.js"></script>
+        <script src="../assets/js/navigation.js"></script>
     </body>
 </html>
