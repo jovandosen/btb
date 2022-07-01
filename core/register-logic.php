@@ -96,7 +96,7 @@
             }
 
             // prepare sql query
-            $sqlPrepare = $conn->prepare("INSERT INTO users(name, email, password, created, updated) VALUES(?, ?, ?, ?, ?)");
+            $sqlPrepare = $conn->prepare("INSERT INTO users(name, email, password, role, last_login, created, updated) VALUES(?, ?, ?, ?, ?, ?, ?)");
 
             // hash the user password
             $password = password_hash($password, PASSWORD_DEFAULT);
@@ -104,8 +104,11 @@
             // current date and time
             $dateTime = date('Y-m-d H:i:s');
 
+            // user role
+            $role = "user";
+
             // bind user input fields
-            $sqlPrepare->bind_param("sssss", $name, $email, $password, $dateTime, $dateTime);
+            $sqlPrepare->bind_param("sssssss", $name, $email, $password, $role, $dateTime, $dateTime, $dateTime);
 
             // run query
             $sqlPrepare->execute();
@@ -113,9 +116,10 @@
             // close prepared statement
             $sqlPrepare->close();
 
-            // set user id and name in session
+            // set user data in session
             $_SESSION['user_id'] = $conn->insert_id;
             $_SESSION['user_name'] = $name;
+            $_SESSION['user_role'] = $role;
 
             // close connection
             $conn->close();
