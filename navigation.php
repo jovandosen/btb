@@ -41,7 +41,9 @@
                 <a href="javascript:void(0)"><?php echo (isset($_SESSION['user_name'])) ? $_SESSION['user_name'] : 'No Name'; ?></a>
                 <ul class="logged-user-dropdown-links" id="logged-user-dropdown-links-el">
                     <li><a href="profile.php">Profile</a></li>
+                    <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == "admin"): ?>
                     <li><a href="user-list.php">User List</a></li>
+                    <?php endif; ?>
                     <li><a href="logout.php">Logout</a></li>
                 </ul>
             </li>

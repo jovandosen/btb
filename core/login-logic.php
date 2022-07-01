@@ -112,19 +112,24 @@
                 // set successfull login message
                 $_SESSION['login_message'] = 'Welcome back.';
 
+                // set user data to session
                 $_SESSION['user_id'] = $user->id;
                 $_SESSION['user_name'] = $user->name;
+                $_SESSION['user_role'] = $user->role;
 
                 // current date and time
                 $dateTime = date('Y-m-d H:i:s');
 
                 // update last login column in db
-                $sqlUpdateResult = $conn->query("UPDATE users set last_login = '".$dateTime."' WHERE id = '".$user->id."'");
+                $sqlUpdateResult = $conn->query("UPDATE users set last_login = '$dateTime' WHERE id = '$user->id'");
 
+                // close db connection
                 $conn->close();
 
+                // redirect to profile page
                 header('Location: core/profile.php');
 
+                // kill the script
                 exit();
 
             } else {
