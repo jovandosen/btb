@@ -92,6 +92,8 @@
 
             $user = $storeResult->fetch_object();
 
+            $sqlPrepareSelect->close();
+
             // user found by email address
             if(!is_null($user)){
                 
@@ -112,6 +114,14 @@
 
                 $_SESSION['user_id'] = $user->id;
                 $_SESSION['user_name'] = $user->name;
+
+                // current date and time
+                $dateTime = date('Y-m-d H:i:s');
+
+                // update last login column in db
+                $sqlUpdateResult = $conn->query("UPDATE users set last_login = '".$dateTime."' WHERE id = '".$user->id."'");
+
+                $conn->close();
 
                 header('Location: core/profile.php');
 
