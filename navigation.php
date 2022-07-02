@@ -43,6 +43,7 @@
                     <li><a href="profile.php">Profile</a></li>
                     <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == "admin"): ?>
                     <li><a href="user-list.php">User List</a></li>
+                    <li><a href="../helper/generate-users.php">Generate Users</a></li>
                     <?php endif; ?>
                     <li><a href="logout.php">Logout</a></li>
                 </ul>
