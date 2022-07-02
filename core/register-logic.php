@@ -95,6 +95,17 @@
                 exit();
             }
 
+            // check if email already exists
+            $allEmailsResult = $conn->query("SELECT email FROM users");
+
+            while($emailFragment = $allEmailsResult->fetch_object()){
+                if($email == $emailFragment->email){
+                    $_SESSION['email_error'] = 'Email address already exists.';
+                    header('Location: register.php');
+                    die();
+                }
+            }
+
             // prepare sql query
             $sqlPrepare = $conn->prepare("INSERT INTO users(name, email, password, role, last_login, created, updated) VALUES(?, ?, ?, ?, ?, ?, ?)");
 
