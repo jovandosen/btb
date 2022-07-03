@@ -3,6 +3,8 @@
     // start the session
     session_start();
 
+    require_once('config.php');
+
     if(isset($_SESSION['user_id'])){
         header('Location: core/profile.php');
         exit();
@@ -87,7 +89,7 @@
         if($error === false){
 
             // create db connection
-            $conn = new mysqli("localhost", "jovan", "protector-994", "btb");
+            $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
             // check if there are any db connection errors
             if($conn->connect_errno){

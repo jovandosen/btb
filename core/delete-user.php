@@ -3,13 +3,15 @@
     // start the session
     session_start();
 
+    require_once(__DIR__ . '/../config.php');
+
     // check if delete user button is clicked
     if(isset($_POST['delete'])){
 
         $id = $_POST['userID'];
 
         // create db connection
-        $conn = new mysqli("localhost", "jovan", "protector-994", "btb");
+        $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
         // check if there are any db connection errors
         if($conn->connect_errno){
