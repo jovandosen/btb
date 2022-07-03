@@ -111,6 +111,7 @@
                 $_SESSION['user_id'] = $user->id;
                 $_SESSION['user_name'] = $user->name;
                 $_SESSION['user_role'] = $user->role;
+                $_SESSION['user_avatar'] = $user->avatar;
 
                 // current date and time
                 $dateTime = date('Y-m-d H:i:s');

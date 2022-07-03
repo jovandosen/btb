@@ -1,0 +1,18 @@
+#profile-page-container {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    margin: 100px auto;
+}
+.upload-btn-box {
+    margin-top: 10px;
+}
+#upload-btn {
+    padding: 10px;
+    color: white;
+    background-color: chocolate;
+    border: none;
+}
+#upload-btn:hover {
+    cursor: pointer;
+}
