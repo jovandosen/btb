@@ -1,36 +1,3 @@
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    nav ul {
-        list-style-type: none;
-        background-color: #333;
-        overflow: hidden;
-        text-align: right;
-    }
-    nav ul li {
-        display: inline-block;
-        margin: 10px;
-    }
-    nav ul li a {
-        text-decoration: none;
-        color: white;
-    }
-    nav ul li a:hover {
-        color: #cccccc;
-    }
-    .logged-user-dropdown-links {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: 28px;   
-    }
-    .logged-user-dropdown-links li {
-        display: block;
-    }
-</style>
 <nav>
     <ul>
         <?php if(!isset($_SESSION['user_id'])): ?>
