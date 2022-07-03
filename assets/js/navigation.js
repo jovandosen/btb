@@ -1,19 +1,23 @@
 var navEl = document.getElementById("user-links-wrapper-box");
 var navElLinks = document.getElementById("logged-user-dropdown-links-el");
 
-var elements = [navEl, navElLinks];
+if(navEl !== null){
 
-for(var i = 0; i < elements.length; i++){
-    elements[i].addEventListener("mouseover", showLinks);
-    elements[i].addEventListener("mouseout", hideLinks);
-}
+    var elements = [navEl, navElLinks];
 
-function showLinks()
-{
-    navElLinks.style.display = "block";
-}
+    for(var i = 0; i < elements.length; i++){
+        elements[i].addEventListener("mouseover", showLinks);
+        elements[i].addEventListener("mouseout", hideLinks);
+    }
 
-function hideLinks()
-{
-    navElLinks.style.display = "none";
+    function showLinks()
+    {
+        navElLinks.style.display = "block";
+    }
+
+    function hideLinks()
+    {
+        navElLinks.style.display = "none";
+    }
+
 }
