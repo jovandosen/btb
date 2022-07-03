@@ -14,3 +14,6 @@ define('DB_PASSWORD', 'protector-994');
 
 /* App root */
 define('ABSPATH', __DIR__ . '/');
+
+/* Uploads directory */
+define('UPLOADS', __DIR__ . '/uploads/');

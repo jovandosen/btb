@@ -56,6 +56,16 @@
                         <div class="upload-btn-box">
                             <input type="submit" value="Upload" name="upload" id="upload-btn">
                         </div>
+                        <div class="upload-error-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['upload_error'])){
+                                        echo $_SESSION['upload_error'];
+                                        unset($_SESSION['upload_error']);
+                                    }
+                                ?>
+                            </p>
+                        </div>
                     </form>
                 </div>
             </div>
