@@ -4,17 +4,10 @@
 
     require_once(__DIR__ . '/../config.php');
 
+    require(ABSPATH . 'db.php');
+
     if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] != "admin"){
         header('Location: ../login.php');
-        exit();
-    }
-
-    // create db connection
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-    // check if there are any db connection errors
-    if($conn->connect_errno){
-        echo "Failed to connect to MySQL: " . $conn->connect_error;
         exit();
     }
 

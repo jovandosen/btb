@@ -5,19 +5,12 @@
 
     require_once(__DIR__ . '/../config.php');
 
+    require(ABSPATH . 'db.php');
+
     // check if delete user button is clicked
     if(isset($_POST['delete'])){
 
         $id = $_POST['userID'];
-
-        // create db connection
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-        // check if there are any db connection errors
-        if($conn->connect_errno){
-            echo "Failed to connect to MySQL: " . $conn->connect_error;
-            exit();
-        }
 
         // prepare sql delete query
         $sqlPrepareDelete = $conn->prepare("DELETE FROM users WHERE id = ?");
