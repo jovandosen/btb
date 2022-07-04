@@ -43,9 +43,13 @@
             <div class="avatar-container">
                 <div class="avatar-wrapper">
                     <?php if(empty($_SESSION['user_avatar'])): ?>
-                        <img src="../assets/images/no-avatar.jpeg" alt="No Avatar">
+                        <img src="../assets/images/no-avatar.jpeg" alt="No Avatar" width="250px" height="250px" />
                     <?php else: ?>
-                        <p>image</p>
+                        <?php if(file_exists(UPLOADS . $_SESSION['user_avatar'])): ?>
+                            <img src="../uploads/<?php echo $_SESSION['user_avatar']; ?>" alt="User avatar" width="250px" height="250px" />
+                        <?php else: ?>
+                            <img src="../assets/images/no-avatar.jpeg" alt="No Avatar" width="250px" height="250px" />
+                        <?php endif; ?>        
                     <?php endif; ?>    
                 </div>
                 <div class="avatar-form">

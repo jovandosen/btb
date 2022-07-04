@@ -62,13 +62,26 @@ if(isset($_POST['upload'])){
     // check if avatar exists
     if(file_exists($avatarDestination)){
         $newAvatarName = hash('sha256', $avatarName . strval(time()));
-        $avatarDestination = UPLOADS . $newAvatarName . '.' . $avatarExtension;
+        $avatarName = $newAvatarName . '.' . $avatarExtension;
+        $avatarDestination = UPLOADS . $avatarName;
     }
 
     if(move_uploaded_file($avatarTmpName, $avatarDestination)){
         // success
+        // update avatar value in db
+        $avatarUpdateResult = $conn->query("UPDATE users SET avatar = '$avatarName' WHERE id = '".$_SESSION['user_id']."'");
+
+        // close db connection
+        $conn->close();
+
+        // set data to session
+        $_SESSION['user_avatar'] = $avatarName;
         $_SESSION['upload_success'] = 'File uploaded successfully.';
+
+        // redirect to profile
         header('Location: profile.php');
+
+        // kill the script
         exit();
     } else {
         // error
