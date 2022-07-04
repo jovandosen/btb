@@ -16,3 +16,8 @@
 #upload-btn:hover {
     cursor: pointer;
 }
+.success-msg-box {
+    margin-top: 5px;
+    color: green;
+    font-size: 15px;
+}
