@@ -51,7 +51,7 @@
                 <div class="avatar-form">
                     <form action="user-avatar.php" method="POST" enctype="multipart/form-data">
                         <div>
-                            <input type="file" name="avatar">
+                            <input type="file" name="avatar" accept="image/*" />
                         </div>
                         <div class="upload-btn-box">
                             <input type="submit" value="Upload" name="upload" id="upload-btn">
@@ -61,7 +61,7 @@
                             <div class="error-msg-box">
                                 <p>
                                     <?php
-                                        echo $_SESSION['upload_error'];
+                                        echo "<div id='profile-flash-msg-el' class='profile-flash-msg-box'>" . $_SESSION['upload_error'] . "</div>";
                                         unset($_SESSION['upload_error']);
                                     ?>
                                 </p>
@@ -72,7 +72,7 @@
                             <div class="success-msg-box">
                                 <p>
                                     <?php
-                                        echo $_SESSION['upload_success'];
+                                        echo "<div id='profile-flash-msg-el' class='profile-flash-msg-box'>" . $_SESSION['upload_success'] . "</div>";
                                         unset($_SESSION['upload_success']);
                                     ?>
                                 </p>
@@ -84,6 +84,7 @@
             </div>
         </div>
         <script src="../assets/js/flash-msg.js"></script>
+        <script src="../assets/js/profile-flash-msg.js"></script>
         <script src="../assets/js/navigation.js"></script>
     </body>
 </html>

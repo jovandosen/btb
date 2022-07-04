@@ -26,6 +26,13 @@ if(isset($_POST['upload'])){
         exit();
     }
 
+    // error check, any value but 0 is bad
+    if($_FILES['avatar']['error'] !== 0){
+        $_SESSION['upload_error'] = 'Sorry, error occurred during file upload.';
+        header('Location: profile.php');
+        exit();
+    }
+
     // get file name
     $avatarName = $_FILES['avatar']['name'];
 
@@ -33,14 +40,14 @@ if(isset($_POST['upload'])){
     $avatarInfo = pathinfo($avatarName);
     
     // define allowed file extensions
-    $allowedExtensions = ['jpg', 'jpeg', 'png'];
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
     // uploaded file extension
     $avatarExtension = $avatarInfo['extension'];
 
     // check extension
     if(!in_array($avatarExtension, $allowedExtensions)){
-        $_SESSION['upload_error'] = 'Wrong file type. Only jpg, jpeg and png allowed.';
+        $_SESSION['upload_error'] = 'Wrong file type. Only jpg, jpeg, png and gif allowed.';
         header('Location: profile.php');
         exit();
     }
