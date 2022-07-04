@@ -55,7 +55,15 @@ if(isset($_POST['upload'])){
     // temporary file name
     $avatarTmpName = $_FILES['avatar']['tmp_name'];
 
-    $avatarDestination = UPLOADS . basename($_FILES['avatar']['name']);
+    $avatarName = basename($_FILES['avatar']['name']);
+
+    $avatarDestination = UPLOADS . $avatarName;
+
+    // check if avatar exists
+    if(file_exists($avatarDestination)){
+        $newAvatarName = hash('sha256', $avatarName . strval(time()));
+        $avatarDestination = UPLOADS . $newAvatarName . '.' . $avatarExtension;
+    }
 
     if(move_uploaded_file($avatarTmpName, $avatarDestination)){
         // success
