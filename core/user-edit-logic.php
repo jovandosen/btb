@@ -98,6 +98,7 @@ if(isset($_POST['update'])){
         if($updateStatus){
 
             $redirectLocation = '';
+            $flashMsg = '';
 
             if(!isset($_POST['uID'])){
                 $_SESSION['user_name'] = $name;
@@ -105,11 +106,13 @@ if(isset($_POST['update'])){
                 $_SESSION['user_role'] = $role;
 
                 $redirectLocation = 'user-edit.php';
+                $flashMsg = 'You have successfully updated your data.';
             } else {
                 $redirectLocation = 'user-list.php';
+                $flashMsg = 'You have successfully updated user data.';
             }
 
-            $_SESSION['update_message'] = 'You have successfully updated your data.';
+            $_SESSION['update_message'] = $flashMsg;
 
             $sqlPrepareUpdate->close();
 
