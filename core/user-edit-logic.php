@@ -97,10 +97,16 @@ if(isset($_POST['update'])){
 
         if($updateStatus){
 
+            $redirectLocation = '';
+
             if(!isset($_POST['uID'])){
                 $_SESSION['user_name'] = $name;
                 $_SESSION['user_email'] = $email;
                 $_SESSION['user_role'] = $role;
+
+                $redirectLocation = 'user-edit.php';
+            } else {
+                $redirectLocation = 'user-list.php';
             }
 
             $_SESSION['update_message'] = 'You have successfully updated your data.';
@@ -109,7 +115,7 @@ if(isset($_POST['update'])){
 
             $conn->close();
 
-            header('Location: user-edit.php');
+            header('Location: ' . $redirectLocation);
             exit();
 
         }

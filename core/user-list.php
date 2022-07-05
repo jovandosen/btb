@@ -14,6 +14,13 @@
     </head>
     <body>
         <?php require('../navigation.php'); ?>
+        <?php
+            // check if successfull update message exists
+            if(isset($_SESSION['update_message'])){
+                echo "<div id='flash-msg-el' class='flash-msg-box flash-success'>" . $_SESSION['update_message'] . "</div>";
+                unset($_SESSION['update_message']);
+            }
+        ?>
         <div id="user-table-container">
             <?php if($result->num_rows > 0): ?>
                 <h3>User list</h3>
