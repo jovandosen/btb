@@ -88,6 +88,8 @@ if(isset($_POST['update'])){
 
             $_SESSION['update_message'] = 'You have successfully updated your data.';
 
+            $sqlPrepareUpdate->close();
+
             $conn->close();
 
             header('Location: user-edit.php');
