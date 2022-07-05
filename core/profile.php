@@ -86,6 +86,31 @@
                     </form>
                 </div>
             </div>
+            <div class="main-user-data-container">
+
+                <?php if(isset($_SESSION['user_name'])): ?>
+                    <div class="user-name-style main-user-data-box-style">
+                        <p><b>Name: </b><?php echo $_SESSION['user_name']; ?></p>
+                    </div>
+                <?php endif; ?>
+
+                <?php if(isset($_SESSION['user_email'])): ?>
+                    <div class="user-email-style main-user-data-box-style">
+                        <p><b>Email: </b><?php echo $_SESSION['user_email']; ?></p>
+                    </div>
+                <?php endif; ?>
+
+                <?php if(isset($_SESSION['user_role'])): ?>
+                    <div class="user-role-style main-user-data-box-style">
+                        <p><b>Role: </b><?php echo $_SESSION['user_role']; ?></p>
+                    </div>
+                <?php endif; ?>
+
+                <div class="edit-profile-data-btn-container">
+                    <a href="user-edit.php" class="edit-profile-data-btn">Edit</a>
+                </div>
+
+            </div>
         </div>
         <script src="../assets/js/flash-msg.js"></script>
         <script src="../assets/js/profile-flash-msg.js"></script>

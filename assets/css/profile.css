@@ -1,6 +1,6 @@
 #profile-page-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 50vw;
     margin: 100px auto;
 }
@@ -13,11 +13,31 @@
     background-color: chocolate;
     border: none;
 }
-#upload-btn:hover {
+.edit-profile-data-btn-container {
+    margin-top: 10px;
+}
+.edit-profile-data-btn {
+    text-decoration: none;
+    padding: 5px;
+    color: white;
+    background-color: royalblue;
+    border: none;
+}
+#upload-btn:hover, .edit-profile-data-btn:hover {
     cursor: pointer;
 }
 .success-msg-box {
     margin-top: 5px;
     color: green;
     font-size: 15px;
+}
+.main-user-data-box-style {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #c2c2a3;
+}
+.user-name-style {
+    font-size: 20px;
+}
+.user-email-style {
+    font-size: 18px;
 }

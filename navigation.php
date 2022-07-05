@@ -13,6 +13,8 @@
                         <li><a href="../core/user-list.php">User List</a></li>
                         <li><a href="../helper/generate-users.php">Generate Users</a></li>
                     <?php endif; ?>
+
+                    <li><a href="#">Settings</a></li>
                     
                     <li><a href="../core/logout.php">Logout</a></li>
                 </ul>
