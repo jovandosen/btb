@@ -30,6 +30,13 @@ if(!isset($_SESSION['user_id'])){
     </head>
     <body>
         <?php require('../navigation.php'); ?>
+        <?php
+            // check if successfull update message exists
+            if(isset($_SESSION['update_message'])){
+                echo "<div id='flash-msg-el' class='flash-msg-box flash-success'>" . $_SESSION['update_message'] . "</div>";
+                unset($_SESSION['update_message']);
+            }
+        ?>
         <div id="form-container">
             <div>
                 <form action="user-edit-logic.php" method="POST">
@@ -100,6 +107,7 @@ if(!isset($_SESSION['user_id'])){
                 </form>
             </div>
         </div>
+        <script src="../assets/js/flash-msg.js"></script>
         <script src="../assets/js/navigation.js"></script>
     </body>
 </html>

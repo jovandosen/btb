@@ -74,15 +74,30 @@ if(isset($_POST['update'])){
         $sqlPrepareSelect->close();
 
         // proceed update
-        echo 'so far so good';
+        $sqlPrepareUpdate = $conn->prepare("UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?");
+
+        $sqlPrepareUpdate->bind_param("sssd", $name, $email, $role, $_SESSION['user_id']);
+
+        $updateStatus = $sqlPrepareUpdate->execute();
+
+        if($updateStatus){
+
+            $_SESSION['user_name'] = $name;
+            $_SESSION['user_email'] = $email;
+            $_SESSION['user_role'] = $role;
+
+            $_SESSION['update_message'] = 'You have successfully updated your data.';
+
+            $conn->close();
+
+            header('Location: user-edit.php');
+            exit();
+
+        }
 
     } else {
         header('Location: user-edit.php');
         exit();
     }
-
-    // var_dump($name);
-    // var_dump($email);
-    // var_dump($role);
 
 }
