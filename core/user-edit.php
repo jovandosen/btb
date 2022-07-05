@@ -71,14 +71,26 @@ if(!isset($_SESSION['user_id'])){
                         </div>
                     </div>
                     <div class="box-style">
-                        <select name="role" id="user-role">
-                            <option value="user"
-                                <?php echo (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'user') ? 'selected' : ''; ?>
-                            >User</option>
-                            <option value="admin"
-                                <?php echo (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') ? 'selected' : ''; ?>
-                            >Admin</option>
-                        </select>
+                        <div>
+                            <select name="role" id="user-role" class="<?php echo (isset($_SESSION['role_error'])) ? 'form-field-error' : ''; ?>">
+                                <option value="user"
+                                    <?php echo (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'user') ? 'selected' : ''; ?>
+                                >User</option>
+                                <option value="admin"
+                                    <?php echo (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') ? 'selected' : ''; ?>
+                                >Admin</option>
+                            </select>
+                        </div>
+                        <div class="error-msg-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['role_error'])){
+                                        echo $_SESSION['role_error'];
+                                        unset($_SESSION['role_error']);
+                                    }
+                                ?>
+                            </p>
+                        </div>
                     </div>
                     <div class="box-style">
                         <div>
