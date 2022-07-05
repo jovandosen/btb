@@ -7,6 +7,18 @@ require_once(__DIR__ . '/../config.php');
 
 require(ABSPATH . 'db.php');
 
+$uID = '';
+$uEmail = '';
+
+// update is for user from user list page
+if(isset($_POST['uID'])){
+    $uID = $_POST['uID'];
+    $uEmail = $_POST['uEmail'];
+} else {
+    $uID = $_SESSION['user_id'];
+    $uEmail = $_SESSION['user_email'];
+}
+
 if(isset($_POST['update'])){
 
     // collect form data using POST request method, also trim data
@@ -57,7 +69,7 @@ if(isset($_POST['update'])){
 
         $sqlPrepareSelect = $conn->prepare("SELECT email FROM users WHERE email != ?");
 
-        $sqlPrepareSelect->bind_param("s", $_SESSION['user_email']);
+        $sqlPrepareSelect->bind_param("s", $uEmail);
 
         $sqlPrepareSelect->execute();
 
@@ -79,15 +91,17 @@ if(isset($_POST['update'])){
         // proceed update
         $sqlPrepareUpdate = $conn->prepare("UPDATE users SET name = ?, email = ?, role = ?, updated = ? WHERE id = ?");
 
-        $sqlPrepareUpdate->bind_param("ssssi", $name, $email, $role, $dateTime, $_SESSION['user_id']);
+        $sqlPrepareUpdate->bind_param("ssssi", $name, $email, $role, $dateTime, $uID);
 
         $updateStatus = $sqlPrepareUpdate->execute();
 
         if($updateStatus){
 
-            $_SESSION['user_name'] = $name;
-            $_SESSION['user_email'] = $email;
-            $_SESSION['user_role'] = $role;
+            if(!isset($_POST['uID'])){
+                $_SESSION['user_name'] = $name;
+                $_SESSION['user_email'] = $email;
+                $_SESSION['user_role'] = $role;
+            }
 
             $_SESSION['update_message'] = 'You have successfully updated your data.';
 

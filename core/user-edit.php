@@ -13,6 +13,40 @@ if(!isset($_SESSION['user_id'])){
     exit();
 }
 
+$userName = '';
+$userEmail = '';
+$userRole = '';
+
+// request comes from user list
+if(isset($_POST['userID'])){
+    
+    $id = $_POST['userID'];
+
+    // find user by id
+    $sqlSelectFragment = $conn->prepare("SELECT name, email, role FROM users WHERE id = ?");
+
+    $sqlSelectFragment->bind_param("i", $id);
+
+    $sqlSelectFragment->execute();
+
+    $result = $sqlSelectFragment->get_result();
+
+    $u = $result->fetch_object();
+
+    $sqlSelectFragment->close();
+
+    $conn->close();
+
+    $userName = $u->name;
+    $userEmail = $u->email;
+    $userRole = $u->role;
+
+} else {
+    $userName = $_SESSION['user_name'];
+    $userEmail = $_SESSION['user_email'];
+    $userRole = $_SESSION['user_role'];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +80,7 @@ if(!isset($_SESSION['user_id'])){
                             <i class="fa fa-user"></i>
                             <input type="text" name="name" placeholder="Name..." 
                                 class="field-style <?php echo (isset($_SESSION['name_error'])) ? 'form-field-error' : ''; ?>" autocomplete="off" maxlength="255" 
-                                value="<?php echo (isset($_SESSION['user_name'])) ? $_SESSION['user_name'] : ''; ?>">
+                                value="<?php echo $userName; ?>">
                         </div>
                         <div class="error-msg-box">
                             <p>
@@ -64,7 +98,7 @@ if(!isset($_SESSION['user_id'])){
                             <i class="fa fa-envelope"></i>
                             <input type="text" name="email" placeholder="Email..." 
                                 class="field-style <?php echo (isset($_SESSION['email_error'])) ? 'form-field-error' : ''; ?>" autocomplete="off" maxlength="255" 
-                                value="<?php echo (isset($_SESSION['user_email'])) ? $_SESSION['user_email'] : ''; ?>">
+                                value="<?php echo $userEmail; ?>">
                         </div>
                         <div class="error-msg-box">
                             <p>
@@ -81,10 +115,10 @@ if(!isset($_SESSION['user_id'])){
                         <div>
                             <select name="role" id="user-role" class="<?php echo (isset($_SESSION['role_error'])) ? 'form-field-error' : ''; ?>">
                                 <option value="user"
-                                    <?php echo (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'user') ? 'selected' : ''; ?>
+                                    <?php echo ($userRole == 'user') ? 'selected' : ''; ?>
                                 >User</option>
                                 <option value="admin"
-                                    <?php echo (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') ? 'selected' : ''; ?>
+                                    <?php echo ($userRole == 'admin') ? 'selected' : ''; ?>
                                 >Admin</option>
                             </select>
                         </div>
@@ -101,6 +135,10 @@ if(!isset($_SESSION['user_id'])){
                     </div>
                     <div class="box-style">
                         <div>
+                            <?php if(isset($_POST['userID']) && !empty($u->email)): ?>
+                                <input type="hidden" name="uID" value="<?php echo $_POST['userID']; ?>">
+                                <input type="hidden" name="uEmail" value="<?php echo $u->email; ?>">
+                            <?php endif; ?>
                             <input type="submit" value="Update" name="update" id="update-btn" title="Update data" class="edit-profile-data-btn">
                         </div>
                     </div>
