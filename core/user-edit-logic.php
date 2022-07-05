@@ -55,7 +55,26 @@ if(isset($_POST['update'])){
 
     if($error === false){
 
-        //
+        $sqlPrepareSelect = $conn->prepare("SELECT email FROM users WHERE email != ?");
+
+        $sqlPrepareSelect->bind_param("s", $_SESSION['user_email']);
+
+        $sqlPrepareSelect->execute();
+
+        $sqlPrepareSelect->bind_result($e);
+
+        while($sqlPrepareSelect->fetch()){
+            if($email == $e){
+                $_SESSION['email_error'] = 'Email address already exists.';
+                header('Location: user-edit.php');
+                exit();
+            }
+        }
+
+        $sqlPrepareSelect->close();
+
+        // proceed update
+        echo 'so far so good';
 
     } else {
         header('Location: user-edit.php');
