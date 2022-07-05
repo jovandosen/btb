@@ -73,10 +73,13 @@ if(isset($_POST['update'])){
 
         $sqlPrepareSelect->close();
 
-        // proceed update
-        $sqlPrepareUpdate = $conn->prepare("UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?");
+        // current date and time
+        $dateTime = date('Y-m-d H:i:s');
 
-        $sqlPrepareUpdate->bind_param("sssd", $name, $email, $role, $_SESSION['user_id']);
+        // proceed update
+        $sqlPrepareUpdate = $conn->prepare("UPDATE users SET name = ?, email = ?, role = ?, updated = ? WHERE id = ?");
+
+        $sqlPrepareUpdate->bind_param("ssssi", $name, $email, $role, $dateTime, $_SESSION['user_id']);
 
         $updateStatus = $sqlPrepareUpdate->execute();
 
