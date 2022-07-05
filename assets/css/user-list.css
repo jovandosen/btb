@@ -41,3 +41,7 @@ th, td {
 .flash-error {
     background-color: red;
 }
+.user-options > form {
+    float: left;
+    margin-right: 3px;
+}

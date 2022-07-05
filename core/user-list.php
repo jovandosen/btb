@@ -46,10 +46,13 @@
                                 <td>
                                     <?php echo $row->updated; ?>
                                 </td>
-                                <td>
+                                <td class="user-options">
                                     <form action="delete-user.php" method="POST">
                                         <input type="hidden" name="userID" value="<?php echo $row->id; ?>">
                                         <input type="submit" value="delete" name="delete" id="delete-user-btn" title="Delete this record">
+                                    </form>
+                                    <form action="user-edit.php" method="POST">
+                                        <input type="hidden" name="userID" value="<?php echo $row->id; ?>">
                                         <input type="submit" value="edit" name="edit" id="edit-user-btn" title="Edit user">
                                     </form>
                                 </td>
