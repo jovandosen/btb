@@ -22,8 +22,8 @@
                     <div class="box-style">
                         <div class="password-field-container">
                             <i class="fa fa-key"></i>
-                            <input type="password" name="password" placeholder="Current password..." 
-                                class="field-style password-input-el <?php echo (isset($_SESSION['password_error'])) ? 'form-field-error' : ''; ?>" id="password">
+                            <input type="password" name="pass" placeholder="Current password..." 
+                                class="field-style password-input-el <?php echo (isset($_SESSION['pass'])) ? 'form-field-error' : ''; ?>" id="password">
                             <div class="password-eye-box">
                                 <div>
                                     <img src="../assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password" class="btb-eye eye-slash-el">
@@ -36,9 +36,9 @@
                         <div class="error-msg-box">
                             <p>
                                 <?php
-                                    if(isset($_SESSION['password_error'])){
-                                        echo $_SESSION['password_error'];
-                                        unset($_SESSION['password_error']);
+                                    if(isset($_SESSION['pass'])){
+                                        echo $_SESSION['pass'];
+                                        unset($_SESSION['pass']);
                                     }
                                 ?>
                             </p>
@@ -47,8 +47,8 @@
                     <div class="box-style">
                         <div class="password-field-container">
                             <i class="fa fa-key"></i>
-                            <input type="password" name="new-password" placeholder="New password..." 
-                                class="field-style password-input-el <?php echo (isset($_SESSION['new_password_error'])) ? 'form-field-error' : ''; ?>" id="new-password">
+                            <input type="password" name="new_pass" placeholder="New password..." 
+                                class="field-style password-input-el <?php echo (isset($_SESSION['new_pass'])) ? 'form-field-error' : ''; ?>" id="new-password">
                             <div class="password-eye-box">
                                 <div>
                                     <img src="../assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password" class="btb-eye eye-slash-el">
@@ -58,12 +58,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="error-msg-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['new_pass'])){
+                                        echo $_SESSION['new_pass'];
+                                        unset($_SESSION['new_pass']);
+                                    }
+                                ?>
+                            </p>
+                        </div>
                     </div>
                     <div class="box-style">
                         <div class="password-field-container">
                             <i class="fa fa-key"></i>
-                            <input type="password" name="repeat-new-password" placeholder="Repeat new password..." 
-                                class="field-style password-input-el <?php echo (isset($_SESSION['repeat_password_error'])) ? 'form-field-error' : ''; ?>" id="repeat-new-password">
+                            <input type="password" name="repeat_new_pass" placeholder="Repeat new password..." 
+                                class="field-style password-input-el <?php echo (isset($_SESSION['repeat_new_pass'])) ? 'form-field-error' : ''; ?>" id="repeat-new-password">
                             <div class="password-eye-box">
                                 <div>
                                     <img src="../assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password" class="btb-eye eye-slash-el">
@@ -72,6 +82,16 @@
                                     <img src="../assets/images/eye.svg" alt="Eye" title="Click to hide password" class="btb-eye eye-no-slash-el">
                                 </div>
                             </div>
+                        </div>
+                        <div class="error-msg-box">
+                            <p>
+                                <?php
+                                    if(isset($_SESSION['repeat_new_pass'])){
+                                        echo $_SESSION['repeat_new_pass'];
+                                        unset($_SESSION['repeat_new_pass']);
+                                    }
+                                ?>
+                            </p>
                         </div>
                     </div>
                     <div class="box-style">
