@@ -24,3 +24,8 @@ nav ul li a:hover {
 .logged-user-dropdown-links li {
     display: block;
 }
+#btb-nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}

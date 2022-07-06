@@ -1,4 +1,4 @@
-<nav>
+<nav id="btb-nav">
     <ul>
         <?php if(!isset($_SESSION['user_id'])): ?>
             <li><a href="register.php">Register</a></li>
@@ -14,7 +14,7 @@
                         <li><a href="../helper/generate-users.php">Generate Users</a></li>
                     <?php endif; ?>
 
-                    <li><a href="#">Settings</a></li>
+                    <li><a href="../core/user-settings.php">Settings</a></li>
                     
                     <li><a href="../core/logout.php">Logout</a></li>
                 </ul>
