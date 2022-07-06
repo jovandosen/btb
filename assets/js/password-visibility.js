@@ -1,5 +1,4 @@
 var eyes = document.getElementsByClassName("btb-eye");
-var pass = document.getElementById("password");
 
 for(var i = 0; i < eyes.length; i++){
     eyes[i].addEventListener("click", togglePasswordVisibility);
@@ -7,13 +6,13 @@ for(var i = 0; i < eyes.length; i++){
 
 function togglePasswordVisibility()
 {
+    this.parentElement.style.display = "none";
+
     if(this.classList.contains("eye-slash-el")){
-        this.style.display = "none";
-        document.getElementById("eye-element").style.display = "block";
-        pass.type = "text";
+        this.parentElement.nextElementSibling.style.display = "block";
+        this.parentElement.parentElement.parentElement.querySelector("input[type='password']").type = "text";
     } else {
-        this.style.display = "none";
-        document.getElementById("eye-slash-element").style.display = "block";
-        pass.type = "password";
+        this.parentElement.previousElementSibling.style.display = "block";
+        this.parentElement.parentElement.parentElement.querySelector("input[type='text']").type = "password";
     }
 }

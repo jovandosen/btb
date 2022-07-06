@@ -43,11 +43,11 @@
                             <input type="password" name="password" placeholder="Password..." 
                                 class="field-style password-input-el <?php echo (isset($_SESSION['password_error'])) ? 'form-field-error' : ''; ?>" id="password">
                             <div class="password-eye-box">
-                                <div class="password-eye-with-slash btb-eye eye-slash-el" id="eye-slash-element">
-                                    <img src="assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password">
+                                <div>
+                                    <img src="../assets/images/eye-slash.svg" alt="Eye slash" title="Click to show password" class="btb-eye eye-slash-el">
                                 </div>
-                                <div class="password-eye-no-slash btb-eye" id="eye-element" style="display: none;">
-                                    <img src="assets/images/eye.svg" alt="Eye" title="Click to hide password">
+                                <div style="display: none;">
+                                    <img src="../assets/images/eye.svg" alt="Eye" title="Click to hide password" class="btb-eye eye-no-slash-el">
                                 </div>
                             </div>
                         </div>
