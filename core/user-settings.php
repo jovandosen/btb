@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="error-msg-box">
+                        <div class="error-msg-box <?php echo (isset($_SESSION['pass']) && strlen($_SESSION['pass']) > 60) ? 'error-msg-box-two' : ''; ?>">
                             <p>
                                 <?php
                                     if(isset($_SESSION['pass'])){
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="error-msg-box">
+                        <div class="error-msg-box <?php echo (isset($_SESSION['new_pass']) && strlen($_SESSION['new_pass']) > 60) ? 'error-msg-box-two' : ''; ?>">
                             <p>
                                 <?php
                                     if(isset($_SESSION['new_pass'])){
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="error-msg-box">
+                        <div class="error-msg-box <?php echo (isset($_SESSION['repeat_new_pass']) && strlen($_SESSION['repeat_new_pass']) > 60) ? 'error-msg-box-two' : ''; ?>">
                             <p>
                                 <?php
                                     if(isset($_SESSION['repeat_new_pass'])){

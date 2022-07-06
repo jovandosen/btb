@@ -25,6 +25,11 @@
     color: red;
     font-size: 15px;
 }
+.error-msg-box-two {
+    margin-top: 5px;
+    color: red;
+    font-size: 11px;
+}
 .link-style {
     text-decoration: none;
 }
