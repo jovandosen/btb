@@ -28,7 +28,7 @@
                     <div><h3>User list</h3></div>
                     <div>
                         <form action="user-search.php" method="GET">
-                            <input type="text" name="search-term" placeholder="Search term..." class="search-form-field" autocomplete="off">
+                            <input type="text" name="term" placeholder="Search term..." class="search-form-field" autocomplete="off">
                             <input type="submit" value="Search" class="search-form-btn">
                         </form>
                     </div>

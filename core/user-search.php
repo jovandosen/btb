@@ -16,7 +16,50 @@
     <body>
         <?php require('../navigation.php'); ?>
         <div id="user-table-container">
-            <h1>Search page</h1>
+            <div class="form-search-container">
+                <div><h3>Search results</h3></div>
+                <div>
+                    <a href="user-list.php">Back to user list</a>
+                </div>
+            </div>
+            <div>
+                <table style="width:100%" id="user-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>CREATED</th>
+                            <th>UPDATED</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($sqlPrepareSelect->fetch()): ?>
+                            <tr>
+                                <td>
+                                    <?php echo $i; ?>
+                                </td>
+                                <td>
+                                    <?php echo $n; ?>
+                                </td>
+                                <td>
+                                    <?php echo $e; ?>
+                                </td>
+                                <td>
+                                    <?php echo $c; ?>
+                                </td>
+                                <td>
+                                    <?php echo $u; ?>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>    
+                    </tbody>
+                </table>
+                <?php 
+                    $sqlPrepareSelect->close(); 
+                    $conn->close();
+                ?>
+            </div>
         </div>
         <script src="../assets/js/flash-msg.js"></script>
         <script src="../assets/js/navigation.js"></script>
