@@ -1,0 +1,16 @@
+.pagination-links-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-links-container > form {
+    margin: 2px;
+}
+
+.pagination-links-container .pag-link {
+    padding: 1px;
+}
+
+.pagination-links-container .pag-link:hover {
+    cursor: pointer;
+}

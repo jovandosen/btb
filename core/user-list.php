@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="../assets/css/navigation.css">
         <link rel="stylesheet" href="../assets/css/user-list.css">
         <link rel="stylesheet" href="../assets/css/register.css">
+        <link rel="stylesheet" href="../assets/css/pagination.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
@@ -67,6 +68,17 @@
                         <?php endwhile; ?>    
                     </tbody>
                 </table>
+
+                <?php if($totalPages > 1): ?>
+                    <div class="pagination-links-container">
+                        <?php for($i = 0; $i < $totalPages; $i++): ?>
+                            <form action="user-list.php" method="GET">
+                                <input type="submit" value="<?php echo $i + 1; ?>" name="selected-page" class="pag-link">
+                            </form>
+                        <?php endfor; ?>
+                    </div>    
+                <?php endif; ?>   
+
             <?php else: ?>
                 <h3>No records found.</h3>    
             <?php endif; ?>
