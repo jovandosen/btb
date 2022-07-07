@@ -1,44 +1,44 @@
 <?php
 
-    // start the session
-    session_start();
+// start the session
+session_start();
 
-    require_once(__DIR__ . '/../config.php');
+require_once(__DIR__ . '/../config.php');
 
-    require(ABSPATH . 'db.php');
+require(ABSPATH . 'db.php');
 
-    if(!isset($_SESSION['user_id'])){
-        header('Location: ../login.php');
-        exit();
-    }
+if(!isset($_SESSION['user_id'])){
+    header('Location: ../login.php');
+    exit();
+}
 
-    if(isset($_GET['selected-page'])){
-        $currentPage = $_GET['selected-page'];
-    } else {
-        $currentPage = 1;
-    }
+if(isset($_GET['selected-page'])){
+    $currentPage = $_GET['selected-page'];
+} else {
+    $currentPage = 1;
+}
 
-    $perPage = 10;
+$perPage = 10;
 
-    $offset = ($perPage * $currentPage) - $perPage;
+$offset = ($perPage * $currentPage) - $perPage;
 
-    $allRecords = "SELECT * FROM users";
-    
-    $allRecordsResult = $conn->query($allRecords);
+$allRecords = "SELECT * FROM users";
 
-    $totalRecords = $allRecordsResult->num_rows;
+$allRecordsResult = $conn->query($allRecords);
 
-    $totalPages = ceil($totalRecords / $perPage);
+$totalRecords = $allRecordsResult->num_rows;
 
-    $sql = "SELECT * FROM users LIMIT 10 OFFSET $offset";
+$totalPages = ceil($totalRecords / $perPage);
 
-    $result = $conn->query($sql);
+$sql = "SELECT * FROM users LIMIT 10 OFFSET $offset";
 
-    $conn->close();
+$result = $conn->query($sql);
 
-    if(isset($_SESSION['user_deleted'])){
-        echo "<div id='flash-msg-el' class='flash-msg-box flash-error'>" . $_SESSION['user_deleted'] . "</div>";
-        unset($_SESSION['user_deleted']);
-    }
+$conn->close();
+
+if(isset($_SESSION['user_deleted'])){
+    echo "<div id='flash-msg-el' class='flash-msg-box flash-error'>" . $_SESSION['user_deleted'] . "</div>";
+    unset($_SESSION['user_deleted']);
+}
 
 ?>

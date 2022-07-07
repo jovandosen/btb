@@ -24,50 +24,60 @@
         ?>
         <div id="user-table-container">
             <?php if($result->num_rows > 0): ?>
-                <h3>User list</h3>
-                <table style="width:100%" id="user-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>EMAIL</th>
-                            <th>CREATED</th>
-                            <th>UPDATED</th>
-                            <th>OPTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while($row = $result->fetch_object()): ?>
+                <div class="form-search-container">
+                    <div><h3>User list</h3></div>
+                    <div>
+                        <form action="user-search.php" method="GET">
+                            <input type="text" name="search-term" placeholder="Search term..." class="search-form-field" autocomplete="off">
+                            <input type="submit" value="Search" class="search-form-btn">
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <table style="width:100%" id="user-table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <?php echo $row->id; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row->name; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row->email; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row->created; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row->updated; ?>
-                                </td>
-                                <td class="user-options">
-                                    <form action="delete-user.php" method="POST">
-                                        <input type="hidden" name="userID" value="<?php echo $row->id; ?>">
-                                        <input type="submit" value="delete" name="delete" id="delete-user-btn" title="Delete this record">
-                                    </form>
-                                    <form action="user-edit.php" method="POST">
-                                        <input type="hidden" name="userID" value="<?php echo $row->id; ?>">
-                                        <input type="submit" value="edit" name="edit" id="edit-user-btn" title="Edit user">
-                                    </form>
-                                </td>
+                                <th>ID</th>
+                                <th>NAME</th>
+                                <th>EMAIL</th>
+                                <th>CREATED</th>
+                                <th>UPDATED</th>
+                                <th>OPTIONS</th>
                             </tr>
-                        <?php endwhile; ?>    
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php while($row = $result->fetch_object()): ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $row->id; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row->name; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row->email; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row->created; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row->updated; ?>
+                                    </td>
+                                    <td class="user-options">
+                                        <form action="delete-user.php" method="POST">
+                                            <input type="hidden" name="userID" value="<?php echo $row->id; ?>">
+                                            <input type="submit" value="delete" name="delete" id="delete-user-btn" title="Delete this record">
+                                        </form>
+                                        <form action="user-edit.php" method="POST">
+                                            <input type="hidden" name="userID" value="<?php echo $row->id; ?>">
+                                            <input type="submit" value="edit" name="edit" id="edit-user-btn" title="Edit user">
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>    
+                        </tbody>
+                    </table>
+                </div>            
 
                 <?php if($totalPages > 1): ?>
                     <div class="pagination-links-container">

@@ -11,10 +11,27 @@
     padding: 1px;
 }
 
-.pagination-links-container .pag-link:hover {
+.pagination-links-container .pag-link:hover, .search-form-btn:hover {
     cursor: pointer;
 }
 
 .active-pag-link {
     background-color: orange;
+}
+
+.form-search-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-form-field {
+    outline: none;
+}
+
+.search-form-btn {
+    background-color: burlywood;
+}
+
+.search-form-field, .search-form-btn {
+    padding: 5px;
 }
