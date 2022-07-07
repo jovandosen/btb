@@ -73,7 +73,8 @@
                     <div class="pagination-links-container">
                         <?php for($i = 0; $i < $totalPages; $i++): ?>
                             <form action="user-list.php" method="GET">
-                                <input type="submit" value="<?php echo $i + 1; ?>" name="selected-page" class="pag-link">
+                                <input type="submit" value="<?php echo $i + 1; ?>" name="selected-page" 
+                                    class="pag-link <?php echo ($currentPage == ($i + 1)) ? 'active-pag-link' : ''; ?>">
                             </form>
                         <?php endfor; ?>
                     </div>    

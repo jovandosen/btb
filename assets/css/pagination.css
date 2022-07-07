@@ -14,3 +14,7 @@
 .pagination-links-container .pag-link:hover {
     cursor: pointer;
 }
+
+.active-pag-link {
+    background-color: orange;
+}
