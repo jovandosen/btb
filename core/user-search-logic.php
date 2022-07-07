@@ -14,7 +14,7 @@ if(!isset($_SESSION['user_id'])){
 
 if(isset($_GET['term'])){
 
-    $term = $_GET['term'];
+    $term = trim($_GET['term']);
 
     $sqlPrepareSelect = $conn->prepare("SELECT id, name, email, created, updated FROM users WHERE name LIKE ? OR email LIKE ? OR role LIKE ?");
 

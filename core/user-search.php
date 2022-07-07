@@ -19,7 +19,7 @@
             <div class="form-search-container">
                 <div><h3>Search results</h3></div>
                 <div>
-                    <a href="user-list.php">Back to user list</a>
+                    <a href="user-list.php" class="back-to-list-link">Back to user list</a>
                 </div>
             </div>
             <div>

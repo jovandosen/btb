@@ -35,3 +35,12 @@
 .search-form-field, .search-form-btn {
     padding: 5px;
 }
+
+.back-to-list-link {
+    text-decoration: none;
+    color: black;
+}
+
+.back-to-list-link:hover {
+    text-decoration: underline;
+}
