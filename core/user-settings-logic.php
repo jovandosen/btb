@@ -52,8 +52,70 @@ if(isset($_POST['change-password'])){
 
     if($error === false){
 
-        // verify current password
-        echo 'Well and Good';
+        // get user password from db
+        $sqlPrepareSelect = $conn->prepare("SELECT * FROM users WHERE email = ?");
+
+        $sqlPrepareSelect->bind_param("s", $_SESSION['user_email']);
+
+        $selectResult = $sqlPrepareSelect->execute();
+
+        $storeResult = $sqlPrepareSelect->get_result();
+
+        $user = $storeResult->fetch_object();
+
+        $sqlPrepareSelect->close();
+
+        // check if current password is correct
+        $userPasswordCheck = password_verify($_POST['pass'], $user->password);
+
+        if(!$userPasswordCheck){
+
+            $_SESSION['pass'] = 'Password is not correct.';
+
+            header('Location: user-settings.php');
+
+            exit();
+        }
+
+        if($_POST['new_pass'] != $_POST['repeat_new_pass']){
+
+            $_SESSION['repeat_new_pass'] = 'Passwords do not match.';
+
+            header('Location: user-settings.php');
+
+            exit();
+        }
+
+        // current date and time
+        $dateTime = date('Y-m-d H:i:s');
+
+        // prepare update query
+        $sqlPrepareUpdate = $conn->prepare("UPDATE users SET password = ?, updated = ? WHERE id = ?");
+
+        // new user password
+        $newPass = password_hash($_POST['new_pass'], PASSWORD_DEFAULT);
+
+        // bind params
+        $sqlPrepareUpdate->bind_param("ssi", $newPass, $dateTime, $user->id);
+
+        // execute update query
+        $updateStatus = $sqlPrepareUpdate->execute();
+
+        // check if update is successfull
+        if($updateStatus){
+
+            $sqlPrepareUpdate->close();
+
+            // close db connection
+            $conn->close();
+
+            // redirect to logout script
+            header('Location: logout.php');
+
+            // kill the script
+            exit();
+
+        }
 
     } else {
         header('Location: user-settings.php');
