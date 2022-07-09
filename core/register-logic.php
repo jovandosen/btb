@@ -7,6 +7,10 @@
 
     require(ABSPATH . 'db.php');
 
+    require_once(ABSPATH . 'vendor/autoload.php');
+
+    use App\Models\User;
+
     if(isset($_SESSION['user_id'])){
         header('Location: core/profile.php');
         exit();
