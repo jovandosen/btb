@@ -5,7 +5,9 @@
 
     require_once('config.php');
 
-    require(ABSPATH . 'db.php');
+    require_once(ABSPATH . 'vendor/autoload.php');
+
+    use App\Models\User;
 
     if(isset($_SESSION['user_id'])){
         header('Location: core/profile.php');
@@ -76,68 +78,11 @@
 
         // if there are no validation errors
         if($error === false){
+            // create user object and db connection
+            $user = new User('', $email, $password);
 
-            $sqlPrepareSelect = $conn->prepare("SELECT * FROM users WHERE email = ?");
-
-            $sqlPrepareSelect->bind_param("s", $email);
-
-            $selectResult = $sqlPrepareSelect->execute();
-
-            $storeResult = $sqlPrepareSelect->get_result();
-
-            $user = $storeResult->fetch_object();
-
-            $sqlPrepareSelect->close();
-
-            // user found by email address
-            if(!is_null($user)){
-                
-                // check if password is correct
-                $userPasswordCheck = password_verify($password, $user->password);
-
-                if(!$userPasswordCheck){
-
-                    $_SESSION['password_error'] = 'Password is not correct.';
-
-                    header('Location: login.php');
-
-                    exit();
-                }
-
-                // set successfull login message
-                $_SESSION['login_message'] = 'Welcome back.';
-
-                // set user data to session
-                $_SESSION['user_id'] = $user->id;
-                $_SESSION['user_name'] = $user->name;
-                $_SESSION['user_email'] = $user->email;
-                $_SESSION['user_role'] = $user->role;
-                $_SESSION['user_avatar'] = $user->avatar;
-
-                // current date and time
-                $dateTime = date('Y-m-d H:i:s');
-
-                // update last login column in db
-                $sqlUpdateResult = $conn->query("UPDATE users set last_login = '$dateTime' WHERE id = '$user->id'");
-
-                // close db connection
-                $conn->close();
-
-                // redirect to profile page
-                header('Location: core/profile.php');
-
-                // kill the script
-                exit();
-
-            } else {
-
-                $_SESSION['email_error'] = 'Email address not found.';
-
-                header('Location: login.php');
-
-                exit();
-            }
-
+            // log user
+            $user->login();
         }
     }
 

@@ -85,4 +85,94 @@ class User extends DbModel
             }
         }
     }
+
+    public function login()
+    {
+        // prepare sql query, prepare function returns object or false
+        $prepared = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+
+        // if query is prepared
+        if($prepared){
+            // bind user input fields, bind_param function returns true or false
+            $binded = $prepared->bind_param("s", $this->email);
+
+            if($binded){
+                // run query, execute function returns true or false
+                $executed = $prepared->execute();
+
+                // if executed
+                if($executed){
+                    // get result, in this select case, get_result function returns object or false
+                    $result = $prepared->get_result();
+
+                    // result object exists
+                    if($result){
+                        // fetch user data, fetch_object function returns object, null or false
+                        $user = $result->fetch_object();
+
+                        // if user data successfully returned
+                        if($user){
+                            // close prepared statement
+                            $prepared->close();
+
+                            // check if password is correct
+                            $userPasswordCheck = password_verify($this->password, $user->password);
+
+                            if(!$userPasswordCheck){
+
+                                $_SESSION['password_error'] = 'Password is not correct.';
+                            
+                                header('Location: login.php');
+                            
+                                exit();
+                            }
+
+                            $this->lastLogin($user);
+
+                            // set successfull login message
+                            $_SESSION['login_message'] = 'Welcome back.';
+
+                            // set user data to session
+                            $_SESSION['user_id'] = $user->id;
+                            $_SESSION['user_name'] = $user->name;
+                            $_SESSION['user_email'] = $user->email;
+                            $_SESSION['user_role'] = $user->role;
+                            $_SESSION['user_avatar'] = $user->avatar;
+
+                            // redirect to profile page
+                            header('Location: core/profile.php');
+
+                            // kill the script
+                            exit();
+
+                        } else {
+                            $_SESSION['email_error'] = 'Email address not found.';
+                            header('Location: login.php');
+                            exit();
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private function lastLogin($user)
+    {
+        // current date and time
+        $dateTime = date('Y-m-d H:i:s');
+
+        // update last login column in db
+        $result = $this->conn->query("UPDATE users set last_login = '$dateTime' WHERE id = '$user->id'");
+
+        // close db connection
+        $this->conn->close();
+    }
 }
