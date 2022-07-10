@@ -6,9 +6,11 @@ use App\Models\DbModel;
 
 class User extends DbModel
 {
+    private $id;
     private $name;
     private $email;
     private $password;
+    private $role;
 
     public function __construct($name, $email, $password)
     {
@@ -33,10 +35,10 @@ class User extends DbModel
             $dateTime = date('Y-m-d H:i:s');
 
             // user role
-            $role = "user";
+            $this->role = "user";
 
             // bind user input fields, bind_param function returns true or false
-            $binded = $prepared->bind_param("sssssss", $this->name, $this->email, $this->password, $role, $dateTime, $dateTime, $dateTime);
+            $binded = $prepared->bind_param("sssssss", $this->name, $this->email, $this->password, $this->role, $dateTime, $dateTime, $dateTime);
 
             // if params are binded
             if($binded){
@@ -45,10 +47,21 @@ class User extends DbModel
 
                 // if executed
                 if($executed){
-                    // close prepared statement and db connection
+                    // close prepared statement
                     $prepared->close();
+
+                    // get user id
+                    $this->id = $this->conn->insert_id; 
+
+                    // close db connection
                     $this->conn->close();
-                    return true;
+
+                    return [
+                        'id' => $this->id,
+                        'name' => $this->name,
+                        'email' => $this->email,
+                        'role' => $this->role
+                    ];
                 } else {
                     return false;
                 }

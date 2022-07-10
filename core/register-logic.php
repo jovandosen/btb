@@ -92,6 +92,7 @@
         // if there are no validation errors
         if($error === false){
 
+            // create user object and db connection
             $user = new User($name, $email, $password);
 
             // check if email already exists
@@ -100,26 +101,23 @@
             // store user
             $created = $user->create();
 
-            var_dump($created);
+            // if user is successfully created we get data array, false otherwise
+            if($created){
+                // set user data in session
+                $_SESSION['user_id'] = $created['id'];
+                $_SESSION['user_name'] = $created['name'];
+                $_SESSION['user_email'] = $created['email'];
+                $_SESSION['user_role'] = $created['role'];
 
-            die('the end');
+                // set successfull registration message
+                $_SESSION['register_message'] = 'You have successfully registered.';
 
-            // set user data in session
-            $_SESSION['user_id'] = $conn->insert_id;
-            $_SESSION['user_name'] = $name;
-            $_SESSION['user_role'] = $role;
+                // redirect to profile page
+                header('Location: core/profile.php');
 
-            // close connection
-            // $conn->close();
-
-            // set successfull registration message
-            $_SESSION['register_message'] = 'You have successfully registered.';
-
-            // redirect to profile page
-            header('Location: core/profile.php');
-
-            // kill the script
-            exit();
+                // kill the script
+                exit();
+            }
 
         }
     }
