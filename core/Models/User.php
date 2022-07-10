@@ -195,4 +195,12 @@ class User extends DbModel
 
         return $users;
     }
+
+    public function avatar($avatarName)
+    {
+        // update avatar value in db
+        $avatarUpdateResult = $this->conn->query("UPDATE users SET avatar = '$avatarName' WHERE id = '".$_SESSION['user_id']."'");
+        // close db connection
+        $this->conn->close();
+    }
 }

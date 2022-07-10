@@ -5,7 +5,9 @@ session_start();
 
 require_once(__DIR__ . '/../config.php');
 
-require(ABSPATH . 'db.php');
+require_once(ABSPATH . 'vendor/autoload.php');
+
+use App\Models\User;
 
 // if upload button is clicked
 if(isset($_POST['upload'])){
@@ -68,11 +70,9 @@ if(isset($_POST['upload'])){
 
     if(move_uploaded_file($avatarTmpName, $avatarDestination)){
         // success
-        // update avatar value in db
-        $avatarUpdateResult = $conn->query("UPDATE users SET avatar = '$avatarName' WHERE id = '".$_SESSION['user_id']."'");
+        $user = new User();
 
-        // close db connection
-        $conn->close();
+        $user->avatar($avatarName);
 
         // set data to session
         $_SESSION['user_avatar'] = $avatarName;
