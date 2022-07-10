@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\DbModel;
+use App\Traits\FileUpload;
 
 class User extends DbModel
 {
@@ -11,6 +12,8 @@ class User extends DbModel
     private $email;
     private $password;
     private $role;
+
+    use FileUpload;
 
     public function __construct($name = '', $email = '', $password = '')
     {
@@ -202,5 +205,10 @@ class User extends DbModel
         $avatarUpdateResult = $this->conn->query("UPDATE users SET avatar = '$avatarName' WHERE id = '".$_SESSION['user_id']."'");
         // close db connection
         $this->conn->close();
+    }
+
+    public function upload()
+    {
+        $this->processFileUpload('user', 'avatar');
     }
 }
