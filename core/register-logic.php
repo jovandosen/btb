@@ -5,8 +5,6 @@
 
     require_once('config.php');
 
-    require(ABSPATH . 'db.php');
-
     require_once(ABSPATH . 'vendor/autoload.php');
 
     use App\Models\User;
@@ -94,37 +92,17 @@
         // if there are no validation errors
         if($error === false){
 
+            $user = new User($name, $email, $password);
+
             // check if email already exists
-            $allEmailsResult = $conn->query("SELECT email FROM users");
+            $user->isEmailTaken();
 
-            while($emailFragment = $allEmailsResult->fetch_object()){
-                if($email == $emailFragment->email){
-                    $_SESSION['email_error'] = 'Email address already exists.';
-                    header('Location: register.php');
-                    die();
-                }
-            }
+            // store user
+            $created = $user->create();
 
-            // prepare sql query
-            $sqlPrepare = $conn->prepare("INSERT INTO users(name, email, password, role, last_login, created, updated) VALUES(?, ?, ?, ?, ?, ?, ?)");
+            var_dump($created);
 
-            // hash the user password
-            $password = password_hash($password, PASSWORD_DEFAULT);
-
-            // current date and time
-            $dateTime = date('Y-m-d H:i:s');
-
-            // user role
-            $role = "user";
-
-            // bind user input fields
-            $sqlPrepare->bind_param("sssssss", $name, $email, $password, $role, $dateTime, $dateTime, $dateTime);
-
-            // run query
-            $sqlPrepare->execute();
-
-            // close prepared statement
-            $sqlPrepare->close();
+            die('the end');
 
             // set user data in session
             $_SESSION['user_id'] = $conn->insert_id;
@@ -132,7 +110,7 @@
             $_SESSION['user_role'] = $role;
 
             // close connection
-            $conn->close();
+            // $conn->close();
 
             // set successfull registration message
             $_SESSION['register_message'] = 'You have successfully registered.';
