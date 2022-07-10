@@ -12,7 +12,7 @@ class User extends DbModel
     private $password;
     private $role;
 
-    public function __construct($name, $email, $password)
+    public function __construct($name = '', $email = '', $password = '')
     {
         parent::__construct();
 
@@ -174,5 +174,25 @@ class User extends DbModel
 
         // close db connection
         $this->conn->close();
+    }
+
+    public function all()
+    {
+        $users = $this->conn->query("SELECT * FROM users");
+
+        $this->conn->close();
+
+        return $users;
+    }
+
+    public function paginate($perPage = 5, $currentPage = 1)
+    {
+        $offset = ($perPage * $currentPage) - $perPage;
+
+        $users = $this->conn->query("SELECT * FROM users LIMIT $perPage OFFSET $offset");
+
+        $this->conn->close();
+
+        return $users;
     }
 }

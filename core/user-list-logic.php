@@ -5,7 +5,9 @@ session_start();
 
 require_once(__DIR__ . '/../config.php');
 
-require(ABSPATH . 'db.php');
+require_once(ABSPATH . 'vendor/autoload.php');
+
+use App\Models\User;
 
 if(!isset($_SESSION['user_id'])){
     header('Location: ../login.php');
@@ -20,21 +22,17 @@ if(isset($_GET['selected-page'])){
 
 $perPage = 10;
 
-$offset = ($perPage * $currentPage) - $perPage;
+$user = new User();
 
-$allRecords = "SELECT * FROM users";
-
-$allRecordsResult = $conn->query($allRecords);
+$allRecordsResult = $user->all();
 
 $totalRecords = $allRecordsResult->num_rows;
 
 $totalPages = ceil($totalRecords / $perPage);
 
-$sql = "SELECT * FROM users LIMIT 10 OFFSET $offset";
+$user = new User();
 
-$result = $conn->query($sql);
-
-$conn->close();
+$result = $user->paginate($perPage, $currentPage);
 
 if(isset($_SESSION['user_deleted'])){
     echo "<div id='flash-msg-el' class='flash-msg-box flash-error'>" . $_SESSION['user_deleted'] . "</div>";
