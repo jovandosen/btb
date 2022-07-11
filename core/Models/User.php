@@ -214,4 +214,98 @@ class User extends DbModel
         $fileUploadResult = $this->processFileUpload('user', 'avatar');
         return $fileUploadResult;
     }
+
+    public function getUserByEmail($email)
+    {
+        $prepared = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+
+        if($prepared){
+
+            $binded = $prepared->bind_param("s", $_SESSION['user_email']);
+
+            if($binded){
+
+                $executed = $prepared->execute();
+
+                if($executed){
+
+                    $result = $prepared->get_result();
+
+                    if($result){
+
+                        $user = $result->fetch_object();
+
+                        if($user){
+
+                            $prepared->close();
+
+                            return $user;
+
+                        } else {
+                            return false;
+                        }
+
+                    } else {
+                        return false;
+                    }
+
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
+
+    public function changePassword($newPassword, $user)
+    {
+        // prepare update query
+        $prepared = $this->conn->prepare("UPDATE users SET password = ?, updated = ? WHERE id = ?");
+
+        // current date and time
+        $dateTime = date('Y-m-d H:i:s');
+
+        // new user password
+        $newPass = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        if($prepared){
+
+            // bind params
+            $binded = $prepared->bind_param("ssi", $newPass, $dateTime, $user->id);
+
+            if($binded){
+
+                // execute update query
+                $executed = $prepared->execute();
+
+                if($executed){
+
+                    $prepared->close();
+
+                    // close db connection
+                    $this->conn->close();
+
+                    // redirect to logout script
+                    header('Location: logout.php');
+
+                    // kill the script
+                    exit();
+
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
 }

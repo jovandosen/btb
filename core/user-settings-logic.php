@@ -5,7 +5,9 @@ session_start();
 
 require_once('../config.php');
 
-require(ABSPATH . 'db.php');
+require_once(ABSPATH . 'vendor/autoload.php');
+
+use App\Models\User;
 
 // check if user is logged in
 if(!isset($_SESSION['user_id'])){
@@ -53,17 +55,9 @@ if(isset($_POST['change-password'])){
     if($error === false){
 
         // get user password from db
-        $sqlPrepareSelect = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $userObj = new User();
 
-        $sqlPrepareSelect->bind_param("s", $_SESSION['user_email']);
-
-        $selectResult = $sqlPrepareSelect->execute();
-
-        $storeResult = $sqlPrepareSelect->get_result();
-
-        $user = $storeResult->fetch_object();
-
-        $sqlPrepareSelect->close();
+        $user = $userObj->getUserByEmail($_SESSION['user_email']);
 
         // check if current password is correct
         $userPasswordCheck = password_verify($_POST['pass'], $user->password);
@@ -86,36 +80,9 @@ if(isset($_POST['change-password'])){
             exit();
         }
 
-        // current date and time
-        $dateTime = date('Y-m-d H:i:s');
+        $userObj = new User();
 
-        // prepare update query
-        $sqlPrepareUpdate = $conn->prepare("UPDATE users SET password = ?, updated = ? WHERE id = ?");
-
-        // new user password
-        $newPass = password_hash($_POST['new_pass'], PASSWORD_DEFAULT);
-
-        // bind params
-        $sqlPrepareUpdate->bind_param("ssi", $newPass, $dateTime, $user->id);
-
-        // execute update query
-        $updateStatus = $sqlPrepareUpdate->execute();
-
-        // check if update is successfull
-        if($updateStatus){
-
-            $sqlPrepareUpdate->close();
-
-            // close db connection
-            $conn->close();
-
-            // redirect to logout script
-            header('Location: logout.php');
-
-            // kill the script
-            exit();
-
-        }
+        $userObj->changePassword($_POST['new_pass'], $user);
 
     } else {
         header('Location: user-settings.php');
