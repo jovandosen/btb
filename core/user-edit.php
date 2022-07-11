@@ -5,7 +5,9 @@ session_start();
 
 require_once('../config.php');
 
-require(ABSPATH . 'db.php');
+require_once(ABSPATH . 'vendor/autoload.php');
+
+use App\Models\User;
 
 // check if user is logged in
 if(!isset($_SESSION['user_id'])){
@@ -22,24 +24,15 @@ if(isset($_POST['userID'])){
     
     $id = $_POST['userID'];
 
-    // find user by id
-    $sqlSelectFragment = $conn->prepare("SELECT name, email, role FROM users WHERE id = ?");
+    $userObj = new User();
 
-    $sqlSelectFragment->bind_param("i", $id);
+    $u = $userObj->getUserById($id);
 
-    $sqlSelectFragment->execute();
-
-    $result = $sqlSelectFragment->get_result();
-
-    $u = $result->fetch_object();
-
-    $sqlSelectFragment->close();
-
-    $conn->close();
-
-    $userName = $u->name;
-    $userEmail = $u->email;
-    $userRole = $u->role;
+    if($u != false){
+        $userName = $u->name;
+        $userEmail = $u->email;
+        $userRole = $u->role;
+    }
 
 } else {
     $userName = $_SESSION['user_name'];

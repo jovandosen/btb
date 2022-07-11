@@ -308,4 +308,48 @@ class User extends DbModel
             return false;
         }
     }
+
+    public function getUserById($id)
+    {
+        // find user by id
+        $prepared = $this->conn->prepare("SELECT name, email, role FROM users WHERE id = ?");
+
+        if($prepared){
+
+            $binded = $prepared->bind_param("i", $id);
+
+            if($binded){
+
+                $executed = $prepared->execute();
+
+                if($executed){
+
+                    $result = $prepared->get_result();
+
+                    if($result){
+
+                        $u = $result->fetch_object();
+
+                        $prepared->close();
+
+                        $this->conn->close();
+
+                        return $u;
+
+                    } else {
+                        return false;
+                    }
+
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
 }
