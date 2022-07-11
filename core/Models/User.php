@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\DbModel;
 use App\Traits\FileUpload;
+use stdClass;
 
 class User extends DbModel
 {
@@ -459,6 +460,65 @@ class User extends DbModel
                     $this->conn->close();
 
                     return $executed;
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
+
+    public function search($term)
+    {
+        $prepared = $this->conn->prepare("SELECT id, name, email, created, updated FROM users WHERE name LIKE ? OR email LIKE ? OR role LIKE ?");
+
+        $users = [];
+
+        if($prepared){
+
+            $prepareTerm = '%' . $term .  '%';
+
+            $binded = $prepared->bind_param("sss", $prepareTerm, $prepareTerm, $prepareTerm);
+
+            if($binded){
+
+                $executed = $prepared->execute();
+
+                if($executed){
+
+                    $bindedResult = $prepared->bind_result($i, $n, $e, $c, $u);
+
+                    if($bindedResult){
+                        
+                        while($prepared->fetch()){
+
+                            $userObject = new stdClass();
+
+                            $userObject->id = $i;
+                            $userObject->name = $n;
+                            $userObject->email = $e;
+                            $userObject->created = $c;
+                            $userObject->updated = $u;
+
+                            $users[] = $userObject;
+                        
+                        }
+
+                        $prepared->close();
+
+                        $this->conn->close();
+
+                        return $users;
+
+                    } else {
+                        return false;
+                    }
+
                 } else {
                     return false;
                 }

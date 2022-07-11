@@ -34,31 +34,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while($sqlPrepareSelect->fetch()): ?>
+                        <?php foreach($users as $user): ?>
                             <tr>
                                 <td>
-                                    <?php echo $i; ?>
+                                    <?php echo $user->id; ?>
                                 </td>
                                 <td>
-                                    <?php echo $n; ?>
+                                    <?php echo $user->name; ?>
                                 </td>
                                 <td>
-                                    <?php echo $e; ?>
+                                    <?php echo $user->email; ?>
                                 </td>
                                 <td>
-                                    <?php echo $c; ?>
+                                    <?php echo $user->created; ?>
                                 </td>
                                 <td>
-                                    <?php echo $u; ?>
+                                    <?php echo $user->updated; ?>
                                 </td>
                             </tr>
-                        <?php endwhile; ?>    
+                        <?php endforeach; ?>    
                     </tbody>
                 </table>
-                <?php 
-                    $sqlPrepareSelect->close(); 
-                    $conn->close();
-                ?>
             </div>
         </div>
         <script src="../assets/js/flash-msg.js"></script>
