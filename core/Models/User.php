@@ -352,4 +352,87 @@ class User extends DbModel
             return false;
         }
     }
+
+    public function getAllEmails($email)
+    {
+        $prepared = $this->conn->prepare("SELECT email FROM users WHERE email != ?");
+
+        $emails = [];
+
+        if($prepared){
+
+            $binded = $prepared->bind_param("s", $email);
+
+            if($binded){
+
+                $executed = $prepared->execute();
+
+                if($executed){
+
+                    $bindedResult = $prepared->bind_result($e);
+
+                    if($bindedResult){
+
+                        while($prepared->fetch()){
+                            $emails[] = $e;
+                        }
+
+                        $prepared->close();
+
+                        $this->conn->close();
+
+                        return $emails;
+
+                    } else {
+                        return false;
+                    }
+
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
+
+    public function updateDetails($details)
+    {
+        // current date and time
+        $dateTime = date('Y-m-d H:i:s');
+
+        // proceed update
+        $prepared = $this->conn->prepare("UPDATE users SET name = ?, email = ?, role = ?, updated = ? WHERE id = ?");
+
+        if($prepared){
+
+            $binded = $prepared->bind_param("ssssi", $details['name'], $details['email'], $details['role'], $dateTime, $details['id']);
+
+            if($binded){
+
+                $executed = $prepared->execute();
+
+                if($executed){
+
+                    $prepared->close();
+
+                    $this->conn->close();
+
+                    return $executed;
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
 }

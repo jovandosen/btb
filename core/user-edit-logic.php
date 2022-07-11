@@ -5,7 +5,9 @@ session_start();
 
 require_once(__DIR__ . '/../config.php');
 
-require(ABSPATH . 'db.php');
+require_once(ABSPATH . 'vendor/autoload.php');
+
+use App\Models\User;
 
 $uID = '';
 $uEmail = '';
@@ -67,33 +69,28 @@ if(isset($_POST['update'])){
 
     if($error === false){
 
-        $sqlPrepareSelect = $conn->prepare("SELECT email FROM users WHERE email != ?");
+        $userObj = new User();
 
-        $sqlPrepareSelect->bind_param("s", $uEmail);
+        $emails = $userObj->getAllEmails($uEmail);
 
-        $sqlPrepareSelect->execute();
-
-        $sqlPrepareSelect->bind_result($e);
-
-        while($sqlPrepareSelect->fetch()){
-            if($email == $e){
+        foreach($emails as $k => $v){
+            if($email == $v){
                 $_SESSION['email_error'] = 'Email address already exists.';
                 header('Location: user-edit.php');
                 exit();
             }
         }
 
-        $sqlPrepareSelect->close();
+        $details = [
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+            'id' => $uID
+        ];
 
-        // current date and time
-        $dateTime = date('Y-m-d H:i:s');
+        $userObj = new User();
 
-        // proceed update
-        $sqlPrepareUpdate = $conn->prepare("UPDATE users SET name = ?, email = ?, role = ?, updated = ? WHERE id = ?");
-
-        $sqlPrepareUpdate->bind_param("ssssi", $name, $email, $role, $dateTime, $uID);
-
-        $updateStatus = $sqlPrepareUpdate->execute();
+        $updateStatus = $userObj->updateDetails($details);
 
         if($updateStatus){
 
@@ -114,11 +111,8 @@ if(isset($_POST['update'])){
 
             $_SESSION['update_message'] = $flashMsg;
 
-            $sqlPrepareUpdate->close();
-
-            $conn->close();
-
             header('Location: ' . $redirectLocation);
+
             exit();
 
         }
