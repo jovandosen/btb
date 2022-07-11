@@ -205,10 +205,13 @@ class User extends DbModel
         $avatarUpdateResult = $this->conn->query("UPDATE users SET avatar = '$avatarName' WHERE id = '".$_SESSION['user_id']."'");
         // close db connection
         $this->conn->close();
+
+        return $avatarUpdateResult;
     }
 
     public function upload()
     {
-        $this->processFileUpload('user', 'avatar');
+        $fileUploadResult = $this->processFileUpload('user', 'avatar');
+        return $fileUploadResult;
     }
 }

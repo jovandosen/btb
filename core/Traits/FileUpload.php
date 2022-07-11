@@ -83,18 +83,10 @@ trait FileUpload
             // success
             // set data to session
             $_SESSION[$sessionName] = $avatarName;
-            $_SESSION['upload_success'] = 'File uploaded successfully.';
-        
-            // redirect to profile
-            header('Location: ' . $redirectLocation);
-        
-            // kill the script
-            exit();
+            return $avatarName;
         } else {
             // error
-            $_SESSION['upload_error'] = 'Sorry, file not uploaded.';
-            header('Location: ' . $redirectLocation);
-            exit();
+            return false;
         }
     }
 }

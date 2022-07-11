@@ -14,8 +14,26 @@ if(isset($_POST['upload'])){
 
     $user = new User();
 
-    $user->upload();
+    $avatarName = $user->upload();
+
+    if($avatarName === false){
+        $_SESSION['upload_error'] = 'Sorry, file not uploaded.';
+        header('Location: profile.php');
+        exit();
+    }
         
-    $user->avatar($_SESSION['user_avatar']);   
+    $result = $user->avatar($avatarName);
+    
+    if($result){
+        $_SESSION['upload_success'] = 'File uploaded successfully.';
+        // redirect to profile
+        header('Location: profile.php');
+        // kill the script
+        exit();
+    } else {
+        $_SESSION['upload_error'] = 'Sorry, file not uploaded.';
+        header('Location: profile.php');
+        exit();
+    }
 
 }
