@@ -1,45 +1,37 @@
 <?php
 
-    // start the session
-    session_start();
+// start the session
+session_start();
 
-    require_once(__DIR__ . '/../config.php');
+require_once(__DIR__ . '/../config.php');
 
-    require(ABSPATH . 'db.php');
+require_once(ABSPATH . 'vendor/autoload.php');
 
-    // check if delete user button is clicked
-    if(isset($_POST['delete'])){
+use App\Models\User;
 
-        $id = $_POST['userID'];
+// check if delete user button is clicked
+if(isset($_POST['delete'])){
 
-        // prepare sql delete query
-        $sqlPrepareDelete = $conn->prepare("DELETE FROM users WHERE id = ?");
+    $id = $_POST['userID'];
 
-        // bind id
-        $sqlPrepareDelete->bind_param("d", $id);
+    $user = new User();
 
-        // execute delete query
-        $deleteResult = $sqlPrepareDelete->execute();
+    $deleteResult = $user->deleteUserById($id);
 
-        // if delete is successfull
-        if($deleteResult){
+    // if delete is successfull
+    if($deleteResult){
 
-            $sqlPrepareDelete->close();
+        // put delete message in session
+        $_SESSION['user_deleted'] = 'User successfully deleted.';
 
-            // close connection
-            $conn->close();
+        // redirect to user list
+        header('Location: user-list.php');
 
-            // put delete message in session
-            $_SESSION['user_deleted'] = 'User successfully deleted.';
-
-            // redirect to user list
-            header('Location: user-list.php');
-
-            // kill the script
-            exit();
-
-        }
+        // kill the script
+        exit();
 
     }
+
+}
 
 ?>

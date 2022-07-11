@@ -435,4 +435,40 @@ class User extends DbModel
             return false;
         }
     }
+
+    public function deleteUserById($id)
+    {
+        // prepare sql delete query
+        $prepared = $this->conn->prepare("DELETE FROM users WHERE id = ?");
+
+        if($prepared){
+
+            // bind id
+            $binded = $prepared->bind_param("d", $id);
+
+            if($binded){
+
+                // execute delete query
+                $executed = $prepared->execute();
+
+                if($executed){
+
+                    $prepared->close();
+
+                    // close connection
+                    $this->conn->close();
+
+                    return $executed;
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
 }
