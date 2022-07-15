@@ -1,5 +1,6 @@
 uploads/*
 vendor/
 file_backups/
+helper/fpdf184/
 error.log
 test.sql
