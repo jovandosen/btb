@@ -81,6 +81,10 @@
             // create user object and db connection
             $user = new User('', $email, $password);
 
+            if(isset($_POST['remember']) && $_POST['remember'] == 'yes'){
+                $rememberMe = $_POST['remember'];
+            }
+
             // log user
             $user->login();
         }

@@ -63,6 +63,10 @@
                         </div>
                     </div>
                     <div class="box-style">
+                        <input type="checkbox" name="remember" id="remember" value="yes">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <div class="box-style">
                         <div>
                             <input type="submit" value="Login" name="login" id="log-btn" title="Login">
                         </div>
